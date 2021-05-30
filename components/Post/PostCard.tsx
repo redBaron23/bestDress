@@ -12,7 +12,7 @@ function PostCard(props: Props) {
     const { post } = props;
     const uri = post.picture ? post.picture : 'https://i.picsum.photos/id/526/700/700.jpg?hmac=cuVBYgSd0HOnHN0rAW6uRmQzuhvD4nIRePaq_TWMQzg';
     return (
-        <Card mode={"outlined"} style={{flex:1,width:"80%"}}>
+        <Card  style={{width:"80%"}}>
             <Card.Title title={post.username} left={LeftContent} />
             <Card.Cover source={{ uri: uri }} />
             <Card.Content>
