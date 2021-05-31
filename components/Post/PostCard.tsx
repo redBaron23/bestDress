@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { Avatar, Button, Card, Paragraph } from 'react-native-paper';
-import Translator from '../../services/Translator';
 import PostModel from './PostModel';
 
 const LeftContent = props => <Avatar.Icon {...props} icon="account" />
@@ -25,7 +24,7 @@ export default function PostCard(props: Props) {
     
 
     useEffect(() => {
-        Translator.getDeviceLanguage();
+       
     },[post])
 
     return (

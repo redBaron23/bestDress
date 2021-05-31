@@ -7,7 +7,7 @@ import PostCard from '../components/Post/PostCard';
 import PostModel from '../components/Post/PostModel';
 import { Text, View } from '../components/Themed';
 
-export default function TabOneScreen() {
+export default function TabHomeScreen() {
 
   const post = new PostModel("Roberto Carlos", 500, 100, "https://shorturl.at/wNOW2", "Merluza que rico");
   return (

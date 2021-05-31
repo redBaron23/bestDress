@@ -3,20 +3,22 @@
  * https://reactnavigation.org/docs/typescript/
  */
 
+import { Dictionary } from "./utils/dictionaries";
+
 export type RootStackParamList = {
   Root: undefined;
   NotFound: undefined;
 };
 
 export type BottomTabParamList = {
-  TabOne: undefined;
-  TabTwo: undefined;
+  [Dictionary.HOME]: undefined;
+  [Dictionary.PROFILE]: undefined;
 };
 
-export type TabOneParamList = {
-  TabOneScreen: undefined;
+export type TabHomeParamList = {
+  [Dictionary.HOME]: undefined;
 };
 
-export type TabTwoParamList = {
-  TabTwoScreen: undefined;
+export type TabProfileParamList = {
+  [Dictionary.PROFILE]: undefined;
 };

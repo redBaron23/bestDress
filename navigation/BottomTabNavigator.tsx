@@ -10,10 +10,10 @@ import * as React from 'react';
 
 import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
-import TabOneScreen from '../screens/TabOneScreen';
-import TabTwoScreen from '../screens/TabTwoScreen';
+import TabHomeScreen from '../screens/TabHomeScreen';
+import TabProfileScreen from '../screens/TabProfileScreen';
 import Translator from '../services/Translator';
-import { BottomTabParamList, TabOneParamList, TabTwoParamList } from '../types';
+import { BottomTabParamList, TabHomeParamList, TabProfileParamList } from '../types';
 import { Dictionary } from '../utils/dictionaries';
 
 const BottomTab = createBottomTabNavigator<BottomTabParamList>();
@@ -23,20 +23,20 @@ export default function BottomTabNavigator() {
 
   return (
     <BottomTab.Navigator
-      initialRouteName="TabOne"
+      initialRouteName={Dictionary.HOME}
       tabBarOptions={{ activeTintColor: Colors[colorScheme].tint }}>
       <BottomTab.Screen
-        name="TabOne"
-        component={TabOneNavigator}
+        name={Dictionary.HOME}
+        component={TabHomeNavigator}
         options={{
-          tabBarIcon: ({ color }) => <TabBarIcon name="ios-code" color={color} />,
+          tabBarIcon: ({ color }) => <TabBarIcon name="home" color={color} />,
         }}
       />
       <BottomTab.Screen
-        name="TabTwo"
-        component={TabTwoNavigator}
+        name={Dictionary.PROFILE}
+        component={TabProfileNavigator}
         options={{
-          tabBarIcon: ({ color }) => <TabBarIcon name="ios-code" color={color} />,
+          tabBarIcon: ({ color }) => <TabBarIcon name="person-circle-sharp" color={color} />,
         }}
       />
     </BottomTab.Navigator>
@@ -51,30 +51,30 @@ function TabBarIcon(props: { name: React.ComponentProps<typeof Ionicons>['name']
 
 // Each tab has its own navigation stack, you can read more about this pattern here:
 // https://reactnavigation.org/docs/tab-based-navigation#a-stack-navigator-for-each-tab
-const TabOneStack = createStackNavigator<TabOneParamList>();
+const TabHomeStack = createStackNavigator<TabHomeParamList>();
 
-function TabOneNavigator() {
+function TabHomeNavigator() {
   return (
-    <TabOneStack.Navigator>
-      <TabOneStack.Screen
-        name="TabOneScreen"
-        component={TabOneScreen}
+    <TabHomeStack.Navigator>
+      <TabHomeStack.Screen
+        name={Dictionary.HOME}
+        component={TabHomeScreen}
         options={{ headerTitle: Translator.translate(Dictionary.HOME) }}
       />
-    </TabOneStack.Navigator>
+    </TabHomeStack.Navigator>
   );
 }
 
-const TabTwoStack = createStackNavigator<TabTwoParamList>();
+const TabProfileStack = createStackNavigator<TabProfileParamList>();
 
-function TabTwoNavigator() {
+function TabProfileNavigator() {
   return (
-    <TabTwoStack.Navigator>
-      <TabTwoStack.Screen
-        name="TabTwoScreen"
-        component={TabTwoScreen}
+    <TabProfileStack.Navigator>
+      <TabProfileStack.Screen
+        name={Dictionary.PROFILE}
+        component={TabProfileScreen}
         options={{ headerTitle: Translator.translate(Dictionary.PROFILE) }}
       />
-    </TabTwoStack.Navigator>
+    </TabProfileStack.Navigator>
   );
 }
