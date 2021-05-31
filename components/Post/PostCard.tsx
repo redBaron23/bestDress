@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Avatar, Button, Card, Paragraph } from 'react-native-paper';
+import Translator from '../../services/Translator';
 import PostModel from './PostModel';
 
 const LeftContent = props => <Avatar.Icon {...props} icon="account" />
@@ -8,9 +9,10 @@ interface Props {
     post: PostModel
 }
 
-function onRatedButtonPressed(setItemPressed, setOppositeItemPressed) {
+function onRatedButtonPressed(setItemPressed, setOppositeItemPressed,updatePost?: () => {}) {
     setItemPressed(prevState => !prevState);
     setOppositeItemPressed(false);
+    //updatePost();
 }
 
 export default function PostCard(props: Props) {
@@ -23,7 +25,7 @@ export default function PostCard(props: Props) {
     
 
     useEffect(() => {
-
+        Translator.getDeviceLanguage();
     },[post])
 
     return (

@@ -9,15 +9,10 @@ import { Text, View } from '../components/Themed';
 
 export default function TabOneScreen() {
 
-  const post = new PostModel("Roberto Carlos",500,100, "https://shorturl.at/wNOW2", "Merluza que rico");
+  const post = new PostModel("Roberto Carlos", 500, 100, "https://shorturl.at/wNOW2", "Merluza que rico");
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Tab One</Text>
-      <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
-      <ScrollView style={{ width: '80%', flex: 1 }} contentContainerStyle={{
-        alignItems: 'center',
-        justifyContent: 'center'
-      }} showsVerticalScrollIndicator={false} >
+      <ScrollView style={styles.scrollView} contentContainerStyle={styles.scrollViewContainer} showsVerticalScrollIndicator={false} >
         <PostCard post={post} />
         <PostCard post={post} />
         <PostCard post={post} />
@@ -32,9 +27,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  title: {
-    fontSize: 20,
-    fontWeight: 'bold',
+  scrollView: { width: '80%', flex: 1 },
+  scrollViewContainer: {
+    alignItems: 'center',
+    paddingTop: "8%",
+    justifyContent: 'center',
   },
   separator: {
     marginVertical: 30,
