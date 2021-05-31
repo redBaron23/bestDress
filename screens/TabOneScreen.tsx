@@ -9,7 +9,7 @@ import { Text, View } from '../components/Themed';
 
 export default function TabOneScreen() {
 
-  const post = new PostModel("Roberto Carlos", "https://shorturl.at/wNOW2", "Merluza que rico");
+  const post = new PostModel("Roberto Carlos",500,100, "https://shorturl.at/wNOW2", "Merluza que rico");
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Tab One</Text>
