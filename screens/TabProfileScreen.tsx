@@ -1,31 +1,103 @@
 import * as React from 'react';
-import { StyleSheet } from 'react-native';
-
-import EditScreenInfo from '../components/EditScreenInfo';
-import { Text, View } from '../components/Themed';
+import { 
+  ScrollView,
+  View,
+  Text,
+  ImageBackground,
+  TouchableOpacity,
+  StyleSheet,
+  Dimensions } from 'react-native';
+import ProfileItem from "../components/ProfileItem";
+import { Ionicons, AntDesign } from "@expo/vector-icons";
 
 export default function TabProfileScreen() {
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Proximamente</Text>
-      <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
-    </View>
-  );
-}
+    <ImageBackground
+    source={require("../assets/images/fondo.png")}
+    style={styles.bg}
+  >
+    <ScrollView style={styles.containerProfile}>
+      <ImageBackground source={require("../assets/images/goku.jpg")} style={styles.photo}>
+        <View style={styles.top}>
+          <TouchableOpacity>
+            
+          </TouchableOpacity>
+
+          <TouchableOpacity>
+            
+          </TouchableOpacity>
+        </View>
+      </ImageBackground>
+
+      <ProfileItem></ProfileItem>
+
+      <View style={styles.actionsProfile}>
+        
+        <TouchableOpacity style={styles.circledButton}>
+          <AntDesign name="laptop" size={24} color="white" />
+        </TouchableOpacity>
+
+        <TouchableOpacity style={styles.circledButton}>
+          <Ionicons name="add" size={30} color="#FFFFFF"></Ionicons>
+        </TouchableOpacity>
+        
+        <TouchableOpacity style={styles.circledButton}>
+        <AntDesign name="like1" size={24} color="#FFFFFF" />
+        </TouchableOpacity>
+
+      </View>
+    </ScrollView>
+  </ImageBackground>
+);
+};
 
 const styles = StyleSheet.create({
-  container: {
+  bg: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
+    resizeMode: "cover",
+    width: Dimensions.get("window").width,
+    height: Dimensions.get("window").height,
   },
-  title: {
-    fontSize: 20,
-    fontWeight: 'bold',
+  top: {
+    paddingTop: 50,
+    marginHorizontal: 10,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
   },
-  separator: {
-    marginVertical: 30,
-    height: 1,
-    width: '80%',
+  containerProfile: { marginHorizontal: 0 },
+  photo: {
+    width: Dimensions.get("window").width,
+    height: 450,
   },
+  actionsProfile: {
+    justifyContent: "center",
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  textButton: {
+    fontSize: 15,
+    color: "#FFFFFF",
+    paddingLeft: 5,
+  },
+  circledButton: {
+    width: 50,
+    height: 50,
+    borderRadius: 25,
+    backgroundColor: "#7444C0",
+    justifyContent: "center",
+    alignItems: "center",
+    marginRight: 10,
+  },
+  roundedButton: {
+    justifyContent: "center",
+    flexDirection: "row",
+    alignItems: "center",
+    marginLeft: 10,
+    height: 50,
+    borderRadius: 25,
+    backgroundColor: "#5636B8",
+    paddingHorizontal: 20,
+  },
+
 });
