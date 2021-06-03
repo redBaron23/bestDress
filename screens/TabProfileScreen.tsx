@@ -8,6 +8,7 @@ import {
   StyleSheet,
   Dimensions } from 'react-native';
 import ProfileItem from "../components/ProfileItem";
+import CardItem from "../components/CardItem";
 import { Ionicons, AntDesign } from "@expo/vector-icons";
 
 export default function TabProfileScreen() {
@@ -46,6 +47,10 @@ export default function TabProfileScreen() {
         </TouchableOpacity>
 
       </View>
+
+      <CardItem></CardItem>
+      <CardItem></CardItem>
+      <CardItem></CardItem>
     </ScrollView>
   </ImageBackground>
 );
@@ -88,6 +93,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     marginRight: 10,
+    elevation:18,
   },
   roundedButton: {
     justifyContent: "center",
