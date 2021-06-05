@@ -3,7 +3,7 @@ export default class User {
         public username: string,
         public name: string,
         public surname: string,
-        public age: string,
+        public age: number,
         public followers: number,
         public likes: number,
         public dislikes: number,
