@@ -10,14 +10,15 @@ import {
 import ProfileItem from "../components/ProfileItem";
 import CardItem from "../components/CardItem";
 import { Ionicons, AntDesign } from "@expo/vector-icons";
+import PostModel from '../components/Post/PostModel';
+import PostCard from '../components/Post/PostCard';
 
 export default function TabProfileScreen() {
+
+  const post = new PostModel("Roberto Carlos", 500, 100, "https://www.latercera.com/resizer/Am6Tr2ws8JnL4CHLfU_Humpr56Q=/900x600/smart/arc-anglerfish-arc2-prod-copesa.s3.amazonaws.com/public/XMJRWZH5N5CBXPL67NAKBGXFNI.jpg", "Merluza que rico");
+
   return (
-    <ImageBackground
-    source={require("../assets/images/fondo.png")}
-    style={styles.bg}
-  >
-    <ScrollView style={styles.containerProfile}>
+      <ScrollView style={styles.scrollView} contentContainerStyle={styles.scrollViewContainer} showsVerticalScrollIndicator={false} >
       <ImageBackground source={require("../assets/images/goku.jpg")} style={styles.photo}>
         <View style={styles.top}>
           <TouchableOpacity>
@@ -48,11 +49,10 @@ export default function TabProfileScreen() {
 
       </View>
 
-      <CardItem></CardItem>
-      <CardItem></CardItem>
-      <CardItem></CardItem>
+      <PostCard post={post} />
+      <PostCard post={post} />
+      <PostCard post={post} />
     </ScrollView>
-  </ImageBackground>
 );
 };
 
@@ -63,6 +63,11 @@ const styles = StyleSheet.create({
     width: Dimensions.get("window").width,
     height: Dimensions.get("window").height,
   },
+  scrollView: {  flex: 1 },
+  scrollViewContainer: {
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
   top: {
     paddingTop: 50,
     marginHorizontal: 10,
@@ -70,7 +75,9 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
   },
-  containerProfile: { marginHorizontal: 0 },
+  containerProfile: {     flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center' },
   photo: {
     width: Dimensions.get("window").width,
     height: 450,
