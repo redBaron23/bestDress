@@ -3,6 +3,11 @@ import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { Provider as PaperProvider } from 'react-native-paper';
+import Amplify from 'aws-amplify'
+import config from './src/aws-exports'
+
+Amplify.configure(config)
+
 
 
 import useCachedResources from './src/hooks/useCachedResources';
