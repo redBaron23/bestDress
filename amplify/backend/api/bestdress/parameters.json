@@ -1,5 +1,11 @@
 {
   "AppSyncApiName": "bestdress",
   "DynamoDBBillingMode": "PAY_PER_REQUEST",
-  "DynamoDBEnableServerSideEncryption": false
+  "DynamoDBEnableServerSideEncryption": false,
+  "AuthCognitoUserPoolId": {
+    "Fn::GetAtt": [
+      "authbestdressd7b48f41",
+      "Outputs.UserPoolId"
+    ]
+  }
 }

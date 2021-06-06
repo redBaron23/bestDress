@@ -1,4 +1,4 @@
-type User @model {
+type User @model   @auth(rules: [{ allow: owner, operations: [create, delete, update] }]) {
   id: ID!
   username: String!
   name: String!
@@ -11,9 +11,10 @@ type User @model {
   description: String
   location: String!
   posts: [Post] @connection(keyName: "byUser", fields: ["id"])
+  updatedAt: AWSDateTime!
 }
 
-type Post @model @key(name: "byUser", fields: ["userID"]) {
+type Post @model @key(name: "byUser", fields: ["userID"]) @auth(rules: [{ allow: owner, operations: [create, delete, update] }])   {
   id: ID!
   userID: ID!
   username: String!
@@ -24,11 +25,14 @@ type Post @model @key(name: "byUser", fields: ["userID"]) {
   profilePicture: String!
   user: User @connection(fields: ["userID"])
   comments: [Comment] @connection(keyName: "byPost", fields: ["id"])
+  updatedAt: AWSDateTime!
 }
 
-type Comment @model @key(name: "byPost", fields: ["postID", "content"]) {
+type Comment @model @key(name: "byPost", fields: ["postID", "content"])  @auth(rules: [{ allow: owner, operations: [create, delete, update] }]) 
+{
   id: ID!
   postID: ID!
   post: Post @connection(fields: ["postID"])
   content: String!
+  updatedAt: AWSDateTime!
 }

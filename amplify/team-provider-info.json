@@ -10,6 +10,11 @@
       "StackName": "amplify-bestdress-dev-51332",
       "StackId": "arn:aws:cloudformation:us-east-1:754778745637:stack/amplify-bestdress-dev-51332/edc63d30-c5d5-11eb-95c3-0e9061196303",
       "AmplifyAppId": "d3oqd1trjmo7pd"
+    },
+    "categories": {
+      "auth": {
+        "bestdressd7b48f41": {}
+      }
     }
   }
 }
