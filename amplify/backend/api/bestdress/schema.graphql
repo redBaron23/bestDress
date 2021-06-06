@@ -1,4 +1,4 @@
-type User @model @key(name: "byUsername", fields: ["username"] ){
+type User @model {
   id: ID!
   username: String!
   name: String!
@@ -10,11 +10,12 @@ type User @model @key(name: "byUsername", fields: ["username"] ){
   profilePicture: String!
   description: String
   location: String!
-  posts: [Post] @connection(keyName: "byPost", fields: ["id"])
+  posts: [Post] @connection(keyName: "byUser", fields: ["id"])
 }
 
-type Post @model @key(name: "by", fields: ["blogID"]) {
+type Post @model @key(name: "byUser", fields: ["userID"]) {
   id: ID!
+  userID: ID!
   username: String!
   description: String
   likes: Int!
