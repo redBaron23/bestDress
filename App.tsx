@@ -8,8 +8,6 @@ import config from './src/aws-exports'
 
 Amplify.configure(config)
 
-
-
 import useCachedResources from './src/hooks/useCachedResources';
 import useColorScheme from './src/hooks/useColorScheme';
 import Navigation from './src/navigation';

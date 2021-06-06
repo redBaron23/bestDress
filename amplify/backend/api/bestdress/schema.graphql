@@ -1,10 +1,19 @@
-type User @model {
+type User @model @key(name: "byUsername", fields: ["username"] ){
   id: ID!
   username: String!
-  posts: [Post] @connection(keyName: "byBlog", fields: ["id"])
+  name: String!
+  surname: String!
+  age: Int!
+  followers: Int!
+  likes: Int!
+  dislikes: Int!
+  profilePicture: String!
+  description: String
+  location: String!
+  posts: [Post] @connection(keyName: "byPost", fields: ["id"])
 }
 
-type Post @model @key(name: "byBlog", fields: ["blogID"]) {
+type Post @model @key(name: "by", fields: ["blogID"]) {
   id: ID!
   username: String!
   description: String
