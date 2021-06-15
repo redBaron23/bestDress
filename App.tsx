@@ -5,6 +5,7 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { Provider as PaperProvider } from 'react-native-paper';
 import Amplify from 'aws-amplify'
 import config from './src/aws-exports'
+import { withAuthenticator } from 'aws-amplify-react-native'
 
 Amplify.configure(config)
 
@@ -12,7 +13,7 @@ import useCachedResources from './src/hooks/useCachedResources';
 import useColorScheme from './src/hooks/useColorScheme';
 import Navigation from './src/navigation';
 
-export default function App() {
+function App() {
   const isLoadingComplete = useCachedResources();
   const colorScheme = useColorScheme();
 
@@ -29,3 +30,5 @@ export default function App() {
     );
   }
 }
+
+export default withAuthenticator(App);
