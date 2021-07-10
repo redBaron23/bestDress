@@ -5,9 +5,15 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { Provider as PaperProvider } from 'react-native-paper';
 import Amplify from 'aws-amplify'
 import config from './src/aws-exports'
+// @ts-ignore
 import { withAuthenticator } from 'aws-amplify-react-native'
 
-Amplify.configure(config)
+Amplify.configure({
+  ...config,
+  Analytics: {
+    disabled: true,
+  }
+})
 
 import useCachedResources from './src/hooks/useCachedResources';
 import useColorScheme from './src/hooks/useColorScheme';
@@ -31,4 +37,8 @@ function App() {
   }
 }
 
-export default withAuthenticator(App);
+export default withAuthenticator(App, {
+  signUpConfig: {
+    hiddenDefaults: ['phone_number']
+  }
+});

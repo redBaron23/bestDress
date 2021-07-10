@@ -7,7 +7,7 @@ import EditScreenInfo from '../components/EditScreenInfo';
 import PostCard from '../components/Post/PostCard';
 import PostModel from '../components/Post/PostModel';
 import { Text, View } from '../components/Themed';
-import AuthenticatorService from '../services/AuthenticatorService';
+// import AuthenticatorService from '../services/AuthenticatorService';
 import PostService from '../services/PostService';
 
 export default function TabHomeScreen() {
@@ -18,16 +18,16 @@ export default function TabHomeScreen() {
     PostService.fetchAllPost().then(console.log)
   },[])
 
-  const onClick = () => {
-    //AuthenticatorService.signUp();
-    AuthenticatorService.signIn();
-  }
+  // const onClick = () => {
+  //   //AuthenticatorService.signUp();
+  //   AuthenticatorService.signOut();
+  // }
   return (
     <View style={styles.container}>
       <ScrollView style={styles.scrollView} contentContainerStyle={styles.scrollViewContainer} showsVerticalScrollIndicator={false} >
-        <Button mode="contained" onPress={onClick} >
+        {/* <Button mode="contained" onPress={onClick} >
           Auto create user
-        </Button>
+        </Button> */}
         <PostCard post={post} />
         <PostCard post={post} />
         <PostCard post={post} />

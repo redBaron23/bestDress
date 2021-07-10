@@ -29,6 +29,15 @@ class AuthenticatorService {
         .then(user => console.log("{user} ",user))
         .catch(e => console.log('error signing in', e));
     }
+
+    public signOut = async() => {
+        try {
+            await Auth.signOut();
+        } catch (error) {
+            console.log(`${TAG} error signing out: ${JSON.stringify(error)}`);
+            
+        }
+    }
 }
 
 export default new AuthenticatorService();
