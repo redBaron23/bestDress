@@ -34,7 +34,6 @@ export const onCreateUser = /* GraphQL */ `
       }
       updatedAt
       createdAt
-      owner
     }
   }
 `;
@@ -70,7 +69,6 @@ export const onUpdateUser = /* GraphQL */ `
       }
       updatedAt
       createdAt
-      owner
     }
   }
 `;
@@ -106,7 +104,6 @@ export const onDeleteUser = /* GraphQL */ `
       }
       updatedAt
       createdAt
-      owner
     }
   }
 `;
@@ -138,7 +135,6 @@ export const onCreatePost = /* GraphQL */ `
         }
         updatedAt
         createdAt
-        owner
       }
       comments {
         items {
@@ -185,7 +181,6 @@ export const onUpdatePost = /* GraphQL */ `
         }
         updatedAt
         createdAt
-        owner
       }
       comments {
         items {
@@ -232,7 +227,6 @@ export const onDeletePost = /* GraphQL */ `
         }
         updatedAt
         createdAt
-        owner
       }
       comments {
         items {
@@ -279,7 +273,6 @@ export const onCreateComment = /* GraphQL */ `
           location
           updatedAt
           createdAt
-          owner
         }
         comments {
           nextToken
@@ -323,7 +316,6 @@ export const onUpdateComment = /* GraphQL */ `
           location
           updatedAt
           createdAt
-          owner
         }
         comments {
           nextToken
@@ -367,7 +359,6 @@ export const onDeleteComment = /* GraphQL */ `
           location
           updatedAt
           createdAt
-          owner
         }
         comments {
           nextToken

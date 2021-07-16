@@ -34,7 +34,6 @@ export const getUser = /* GraphQL */ `
       }
       updatedAt
       createdAt
-      owner
     }
   }
 `;
@@ -62,7 +61,6 @@ export const listUsers = /* GraphQL */ `
         }
         updatedAt
         createdAt
-        owner
       }
       nextToken
     }
@@ -96,7 +94,6 @@ export const getPost = /* GraphQL */ `
         }
         updatedAt
         createdAt
-        owner
       }
       comments {
         items {
@@ -145,7 +142,6 @@ export const listPosts = /* GraphQL */ `
           location
           updatedAt
           createdAt
-          owner
         }
         comments {
           nextToken
@@ -186,7 +182,6 @@ export const getComment = /* GraphQL */ `
           location
           updatedAt
           createdAt
-          owner
         }
         comments {
           nextToken

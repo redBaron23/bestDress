@@ -1,4 +1,5 @@
-type User @model   @auth(rules: [{ allow: owner, operations: [create, delete, update] }]) {
+type User @model  @aws_cognito_user_pools  @auth(rules: [{ allow: owner,ownerField: "id"
+, operations: [create, delete, update] }]) {
   id: ID!
   username: String!
   name: String!
