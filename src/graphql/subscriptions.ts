@@ -16,6 +16,8 @@ export const onCreateUser = /* GraphQL */ `
       profilePicture
       description
       location
+      updatedAt
+      createdAt
       posts {
         items {
           id
@@ -32,8 +34,6 @@ export const onCreateUser = /* GraphQL */ `
         }
         nextToken
       }
-      updatedAt
-      createdAt
     }
   }
 `;
@@ -51,6 +51,8 @@ export const onUpdateUser = /* GraphQL */ `
       profilePicture
       description
       location
+      updatedAt
+      createdAt
       posts {
         items {
           id
@@ -67,8 +69,6 @@ export const onUpdateUser = /* GraphQL */ `
         }
         nextToken
       }
-      updatedAt
-      createdAt
     }
   }
 `;
@@ -86,6 +86,8 @@ export const onDeleteUser = /* GraphQL */ `
       profilePicture
       description
       location
+      updatedAt
+      createdAt
       posts {
         items {
           id
@@ -102,8 +104,6 @@ export const onDeleteUser = /* GraphQL */ `
         }
         nextToken
       }
-      updatedAt
-      createdAt
     }
   }
 `;
@@ -118,6 +118,8 @@ export const onCreatePost = /* GraphQL */ `
       dislikes
       picture
       profilePicture
+      updatedAt
+      createdAt
       user {
         id
         username
@@ -130,26 +132,26 @@ export const onCreatePost = /* GraphQL */ `
         profilePicture
         description
         location
+        updatedAt
+        createdAt
         posts {
           nextToken
         }
-        updatedAt
-        createdAt
       }
+      owner
       comments {
         items {
           id
           postID
           content
           updatedAt
+          likes
+          dislikes
           createdAt
           owner
         }
         nextToken
       }
-      updatedAt
-      createdAt
-      owner
     }
   }
 `;
@@ -164,6 +166,8 @@ export const onUpdatePost = /* GraphQL */ `
       dislikes
       picture
       profilePicture
+      updatedAt
+      createdAt
       user {
         id
         username
@@ -176,26 +180,26 @@ export const onUpdatePost = /* GraphQL */ `
         profilePicture
         description
         location
+        updatedAt
+        createdAt
         posts {
           nextToken
         }
-        updatedAt
-        createdAt
       }
+      owner
       comments {
         items {
           id
           postID
           content
           updatedAt
+          likes
+          dislikes
           createdAt
           owner
         }
         nextToken
       }
-      updatedAt
-      createdAt
-      owner
     }
   }
 `;
@@ -210,6 +214,8 @@ export const onDeletePost = /* GraphQL */ `
       dislikes
       picture
       profilePicture
+      updatedAt
+      createdAt
       user {
         id
         username
@@ -222,26 +228,26 @@ export const onDeletePost = /* GraphQL */ `
         profilePicture
         description
         location
+        updatedAt
+        createdAt
         posts {
           nextToken
         }
-        updatedAt
-        createdAt
       }
+      owner
       comments {
         items {
           id
           postID
           content
           updatedAt
+          likes
+          dislikes
           createdAt
           owner
         }
         nextToken
       }
-      updatedAt
-      createdAt
-      owner
     }
   }
 `;
@@ -250,6 +256,11 @@ export const onCreateComment = /* GraphQL */ `
     onCreateComment {
       id
       postID
+      content
+      updatedAt
+      likes
+      dislikes
+      createdAt
       post {
         id
         userID
@@ -259,6 +270,8 @@ export const onCreateComment = /* GraphQL */ `
         dislikes
         picture
         profilePicture
+        updatedAt
+        createdAt
         user {
           id
           username
@@ -274,16 +287,11 @@ export const onCreateComment = /* GraphQL */ `
           updatedAt
           createdAt
         }
+        owner
         comments {
           nextToken
         }
-        updatedAt
-        createdAt
-        owner
       }
-      content
-      updatedAt
-      createdAt
       owner
     }
   }
@@ -293,6 +301,11 @@ export const onUpdateComment = /* GraphQL */ `
     onUpdateComment {
       id
       postID
+      content
+      updatedAt
+      likes
+      dislikes
+      createdAt
       post {
         id
         userID
@@ -302,6 +315,8 @@ export const onUpdateComment = /* GraphQL */ `
         dislikes
         picture
         profilePicture
+        updatedAt
+        createdAt
         user {
           id
           username
@@ -317,16 +332,11 @@ export const onUpdateComment = /* GraphQL */ `
           updatedAt
           createdAt
         }
+        owner
         comments {
           nextToken
         }
-        updatedAt
-        createdAt
-        owner
       }
-      content
-      updatedAt
-      createdAt
       owner
     }
   }
@@ -336,6 +346,11 @@ export const onDeleteComment = /* GraphQL */ `
     onDeleteComment {
       id
       postID
+      content
+      updatedAt
+      likes
+      dislikes
+      createdAt
       post {
         id
         userID
@@ -345,6 +360,8 @@ export const onDeleteComment = /* GraphQL */ `
         dislikes
         picture
         profilePicture
+        updatedAt
+        createdAt
         user {
           id
           username
@@ -360,16 +377,11 @@ export const onDeleteComment = /* GraphQL */ `
           updatedAt
           createdAt
         }
+        owner
         comments {
           nextToken
         }
-        updatedAt
-        createdAt
-        owner
       }
-      content
-      updatedAt
-      createdAt
       owner
     }
   }

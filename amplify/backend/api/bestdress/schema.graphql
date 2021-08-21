@@ -1,5 +1,5 @@
-type User @model  @aws_cognito_user_pools  @auth(rules: [{ allow: owner,ownerField: "id"
-, operations: [create, delete, update] }]) {
+type User @model  @aws_cognito_user_pools  @auth(rules: [{ allow: owner,ownerField: "username"
+, operations: [create, delete, update] },   {allow: private, provider: userPools, operations:[read]}]) {
   id: ID!
   username: String!
   name: String!
@@ -15,7 +15,15 @@ type User @model  @aws_cognito_user_pools  @auth(rules: [{ allow: owner,ownerFie
   updatedAt: AWSDateTime!
 }
 
-type Post @model @key(name: "byUser", fields: ["userID"]) @auth(rules: [{ allow: owner, operations: [create, delete, update] }])   {
+# type PublicProfile @model {
+
+# }
+
+type Post @model @key(name: "byUser", fields: ["userID"]) @aws_cognito_user_pools 
+@auth(rules: [
+  { allow: owner, operations: [create, delete, update] },
+   {allow: private, provider: userPools, operations:[read]}
+])   {
   id: ID!
   userID: ID!
   username: String!
@@ -29,11 +37,13 @@ type Post @model @key(name: "byUser", fields: ["userID"]) @auth(rules: [{ allow:
   updatedAt: AWSDateTime!
 }
 
-type Comment @model @key(name: "byPost", fields: ["postID", "content"])  @auth(rules: [{ allow: owner, operations: [create, delete, update] }]) 
+type Comment @model @key(name: "byPost", fields: ["postID", "content"]) @aws_cognito_user_pools  @auth(rules: [{ allow: owner, operations: [create, delete, update] },   {allow: private, provider: userPools, operations:[read]}]) 
 {
   id: ID!
   postID: ID!
   post: Post @connection(fields: ["postID"])
   content: String!
   updatedAt: AWSDateTime!
+  likes: Int!
+  dislikes: Int!
 }

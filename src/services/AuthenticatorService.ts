@@ -6,9 +6,10 @@ import { AuthenticatorInterface } from '../types/AuthenticatorInterface';
 import Log from '../utils/Log';
 import LogTags from '../utils/LogTags';
 
+const TAG = LogTags.AUTHENTICATOR_SERVICE;
+
 class AuthenticatorService implements AuthenticatorInterface {
 
-    private TAG = LogTags.AUTHENTICATOR_SERVICE;
     private username: string;
 
     constructor() {
@@ -20,19 +21,17 @@ class AuthenticatorService implements AuthenticatorInterface {
         this.updateUserRecord();
 
         const caca = await API.graphql(graphqlOperation(listUsers));
-        console.log(`[TEST] JSON.stringify(caca) ${JSON.stringify(caca)}`);
-        
-
+        Log.info(TAG,JSON.stringify(caca))
     }
 
     private getUsernameFromAuth(): Promise<string> {
         return Auth.currentUserInfo()
             .then(userInfo => {
-                Log.info(this.TAG, `Log in successfully welcome: ${userInfo.username}`);
+                Log.info(TAG, `Log in successfully welcome: ${userInfo.username}`);
                 return userInfo.username;
             })
             .catch(error => {
-                Log.error(this.TAG, "Error in Auth.currentUserInfo: ", error);
+                Log.error(TAG, "Error in Auth.currentUserInfo: ", error);
                 return "";
             });
     }
@@ -40,11 +39,14 @@ class AuthenticatorService implements AuthenticatorInterface {
     private updateUserRecord(): void {
         const currentUser = new User(this.username,"falopa")
         try{
-            API.graphql(graphqlOperation(updateUser, {input: currentUser}))
+
+            // console.log(`[TEST] currentUser ${JSON.stringify(currentUser)}`);
+            
+            API.graphql(graphqlOperation(createUser, {input: currentUser}))
 
         }
         catch(error) {
-            Log.error(this.TAG, "Error in update user record: ", error);
+            Log.error(TAG, "Error in update user record: ", error);
         }
     }
 
@@ -77,9 +79,9 @@ class AuthenticatorService implements AuthenticatorInterface {
     public signOut = async () => {
         try {
             await Auth.signOut();
-            Log.info(this.TAG, "Sign out successfully");
+            Log.info(TAG, "Sign out successfully");
         } catch (error) {
-            Log.error(this.TAG, "signing out:", error);
+            Log.error(TAG, "signing out:", error);
         }
     }
 

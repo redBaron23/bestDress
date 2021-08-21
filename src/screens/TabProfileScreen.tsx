@@ -19,7 +19,7 @@ const isSelfProfile = true;
 
 export default function TabProfileScreen() {
 
-  const post = new PostModel("Roberto Carlos", 500, 100, "https://www.latercera.com/resizer/Am6Tr2ws8JnL4CHLfU_Humpr56Q=/900x600/smart/arc-anglerfish-arc2-prod-copesa.s3.amazonaws.com/public/XMJRWZH5N5CBXPL67NAKBGXFNI.jpg", "Merluza que rico");
+  const post = new PostModel("Roberto Carlos","2ff1eb87-edcf-4337-b8e2-7f8006cf4f72", 500, 100, "https://www.latercera.com/resizer/Am6Tr2ws8JnL4CHLfU_Humpr56Q=/900x600/smart/arc-anglerfish-arc2-prod-copesa.s3.amazonaws.com/public/XMJRWZH5N5CBXPL67NAKBGXFNI.jpg", "Merluza que rico");
 
   return (
     <ScrollView style={styles.scrollView} contentContainerStyle={styles.scrollViewContainer} showsVerticalScrollIndicator={false} >

@@ -16,6 +16,8 @@ export const getUser = /* GraphQL */ `
       profilePicture
       description
       location
+      updatedAt
+      createdAt
       posts {
         items {
           id
@@ -32,8 +34,6 @@ export const getUser = /* GraphQL */ `
         }
         nextToken
       }
-      updatedAt
-      createdAt
     }
   }
 `;
@@ -56,11 +56,11 @@ export const listUsers = /* GraphQL */ `
         profilePicture
         description
         location
+        updatedAt
+        createdAt
         posts {
           nextToken
         }
-        updatedAt
-        createdAt
       }
       nextToken
     }
@@ -77,6 +77,8 @@ export const getPost = /* GraphQL */ `
       dislikes
       picture
       profilePicture
+      updatedAt
+      createdAt
       user {
         id
         username
@@ -89,26 +91,26 @@ export const getPost = /* GraphQL */ `
         profilePicture
         description
         location
+        updatedAt
+        createdAt
         posts {
           nextToken
         }
-        updatedAt
-        createdAt
       }
+      owner
       comments {
         items {
           id
           postID
           content
           updatedAt
+          likes
+          dislikes
           createdAt
           owner
         }
         nextToken
       }
-      updatedAt
-      createdAt
-      owner
     }
   }
 `;
@@ -128,6 +130,8 @@ export const listPosts = /* GraphQL */ `
         dislikes
         picture
         profilePicture
+        updatedAt
+        createdAt
         user {
           id
           username
@@ -143,12 +147,10 @@ export const listPosts = /* GraphQL */ `
           updatedAt
           createdAt
         }
+        owner
         comments {
           nextToken
         }
-        updatedAt
-        createdAt
-        owner
       }
       nextToken
     }
@@ -159,6 +161,11 @@ export const getComment = /* GraphQL */ `
     getComment(id: $id) {
       id
       postID
+      content
+      updatedAt
+      likes
+      dislikes
+      createdAt
       post {
         id
         userID
@@ -168,6 +175,8 @@ export const getComment = /* GraphQL */ `
         dislikes
         picture
         profilePicture
+        updatedAt
+        createdAt
         user {
           id
           username
@@ -183,16 +192,11 @@ export const getComment = /* GraphQL */ `
           updatedAt
           createdAt
         }
+        owner
         comments {
           nextToken
         }
-        updatedAt
-        createdAt
-        owner
       }
-      content
-      updatedAt
-      createdAt
       owner
     }
   }
@@ -207,6 +211,11 @@ export const listComments = /* GraphQL */ `
       items {
         id
         postID
+        content
+        updatedAt
+        likes
+        dislikes
+        createdAt
         post {
           id
           userID
@@ -220,9 +229,6 @@ export const listComments = /* GraphQL */ `
           createdAt
           owner
         }
-        content
-        updatedAt
-        createdAt
         owner
       }
       nextToken

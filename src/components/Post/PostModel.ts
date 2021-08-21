@@ -1,10 +1,12 @@
 export default class PostModel {
     constructor(
         public username: string,
-        public likes: number,
-        public dislikes: number,
+        public userID: string,
+        public likes: number = 0,
+        public dislikes: number = 0,
         public picture?: string,
         public description?: string,
         public profilePicture?: string,
+        public id?: number,
       ) {}
 }

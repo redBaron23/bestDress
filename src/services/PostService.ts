@@ -6,27 +6,31 @@ import User from '../model/User';
 import Log from '../utils/Log';
 import LogTags from '../utils/LogTags';
 
-class PostService {
+const TAG = LogTags.POST_SERVICE
 
-    private TAG = LogTags.POST_SERVICE
+class PostService {
 
     public createPost = (post: PostModel) => {
         try {
-            API.graphql(graphqlOperation(createPost, post))
+            //console.log(`[TEST] going to create this post: ${JSON.stringify(post)}`);
+            
+            API.graphql(graphqlOperation(createPost, {input: post}))
         }
         catch (error) {
-            Log.error(this.TAG, "Error creating post", error)
+            Log.error(TAG, "Error creating post", error)
         }
     }
 
     public fetchAllPost = async () => {
         try {
             const postData = await API.graphql(graphqlOperation(listPosts));
-            console.log("[TEST] fetch", postData);
-            return postData
+            const items = postData.data.listPosts.items;
+
+            Log.info(TAG,`total post fetched: ${items.length}`);
+            return items;
         }
         catch (error) {
-            Log.error(this.TAG, "Error fetching all posts", error)
+            Log.error(TAG, "Error fetching all posts", error)
             return [];
         }
     }

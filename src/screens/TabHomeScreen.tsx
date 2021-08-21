@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, { useEffect, useState } from 'react';
 import { StyleSheet } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { Button } from 'react-native-paper';
@@ -12,16 +12,17 @@ import PostService from '../services/PostService';
 
 export default function TabHomeScreen() {
 
-  const post = new PostModel("Roberto Carlos", 500, 100, "https://www.latercera.com/resizer/Am6Tr2ws8JnL4CHLfU_Humpr56Q=/900x600/smart/arc-anglerfish-arc2-prod-copesa.s3.amazonaws.com/public/XMJRWZH5N5CBXPL67NAKBGXFNI.jpg", "Merluza que rico");
-  
+  const [posts, setPosts] = useState<PostModel[]>([]);
+
   useEffect(() => {
-    PostService.fetchAllPost().then(console.log)
-  },[])
+    PostService.fetchAllPost()
+      .then(setPosts)
+  }, [])
 
   const onClick = () => {
     //AuthenticatorService.signUp();
     // AuthenticatorService.signOut();
-    const post = new PostModel("aws",201,352,"https://cdn.pixabay.com/photo/2013/07/13/11/43/tux-158547_960_720.png","Este es tux buena gente","https://upload.wikimedia.org/wikipedia/commons/0/01/LinuxCon_Europe_Linus_Torvalds_03_%28cropped%29.jpg")
+    const post = new PostModel("pato.toledo", "2ff1eb87-edcf-4337-b8e2-7f8006cf4f72", 201, 352, "https://cdn.pixabay.com/photo/2013/07/13/11/43/tux-158547_960_720.png", "Este es tux buena gente", "https://upload.wikimedia.org/wikipedia/commons/0/01/LinuxCon_Europe_Linus_Torvalds_03_%28cropped%29.jpg")
     PostService.createPost(post);
   }
   return (
@@ -30,9 +31,9 @@ export default function TabHomeScreen() {
         <Button mode="contained" onPress={onClick} >
           Auto create user
         </Button>
-        <PostCard post={post} />
-        <PostCard post={post} />
-        <PostCard post={post} />
+        {
+          posts.map(post => <PostCard key={post.id} post={post} />)
+        }
       </ScrollView>
     </View>
   );
