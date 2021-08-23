@@ -20,8 +20,8 @@ class AuthenticatorService implements AuthenticatorInterface {
         this.username = await this.getUsernameFromAuth();
         this.updateUserRecord();
 
-        const caca = await API.graphql(graphqlOperation(listUsers));
-        Log.info(TAG,JSON.stringify(caca))
+        // const caca = await API.graphql(graphqlOperation(listUsers));
+        // Log.info(TAG, JSON.stringify(caca))
     }
 
     private getUsernameFromAuth(): Promise<string> {
@@ -37,15 +37,15 @@ class AuthenticatorService implements AuthenticatorInterface {
     }
 
     private updateUserRecord(): void {
-        const currentUser = new User(this.username,"falopa")
-        try{
+        const currentUser = new User(this.username, "falopa")
+        try {
 
             // console.log(`[TEST] currentUser ${JSON.stringify(currentUser)}`);
-            
-            API.graphql(graphqlOperation(createUser, {input: currentUser}))
+
+            API.graphql(graphqlOperation(createUser, { input: currentUser }))
 
         }
-        catch(error) {
+        catch (error) {
             Log.error(TAG, "Error in update user record: ", error);
         }
     }
@@ -85,8 +85,17 @@ class AuthenticatorService implements AuthenticatorInterface {
         }
     }
 
-    public getUsername(): string {
-        return this.username;
+    public getUsername(): Promise<string> {
+        console.log("El useranme es",!!this.username + "y " + this.username)
+        if (!!this.username) {
+            return Promise.resolve(this.username);
+        }
+
+        return this.getUsernameFromAuth()
+            .then(username => {
+                this.username = username;
+                return username;
+            });
     }
 }
 

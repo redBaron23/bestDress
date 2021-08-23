@@ -3,11 +3,9 @@ import { StyleSheet } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { Button } from 'react-native-paper';
 
-import EditScreenInfo from '../components/EditScreenInfo';
 import PostCard from '../components/Post/PostCard';
 import PostModel from '../components/Post/PostModel';
 import { Text, View } from '../components/Themed';
-// import AuthenticatorService from '../services/AuthenticatorService';
 import PostService from '../services/PostService';
 
 export default function TabHomeScreen() {

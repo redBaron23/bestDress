@@ -1,3 +1,3 @@
 export interface AuthenticatorInterface {
-    getUsername(): string;
+    getUsername(): Promise<string>;
 }
