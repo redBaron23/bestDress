@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
     ScrollView,
     View,
@@ -12,14 +12,29 @@ import { Ionicons, AntDesign } from "@expo/vector-icons";
 import PostModel from '../components/Post/PostModel';
 import PostCard from '../components/Post/PostCard';
 import AuthenticatorService from '../services/AuthenticatorService';
+import { useEffect } from 'react';
+import UserService from '../services/UserService';
+import User from '../model/User';
+import PostService from '../services/PostService';
 
 interface Props {
-    posts: PostModel[],
-    isSelfProfile?: boolean,
+    username: string;
+    isSelfProfile?: boolean;
 }
 
 export default function Profile(props: Props) {
-    const { posts, isSelfProfile = false } = props;
+    const {  username, isSelfProfile = false } = props;
+
+
+    const [ user,setUser ] = useState<User>();
+    const [ posts, setPosts] = useState<PostModel[]>([]);
+
+    useEffect(() => {
+        PostService.fetchPostByUsername(username)
+            .then(setPosts);
+        UserService.getUser(username)
+            .then(setUser);
+    },[username])
 
     return (
         <ScrollView style={styles.scrollView} contentContainerStyle={styles.scrollViewContainer} showsVerticalScrollIndicator={false} >
@@ -35,7 +50,10 @@ export default function Profile(props: Props) {
                 </View>
             </ImageBackground>
 
-            <ProfileItem></ProfileItem>
+            {
+                user && <ProfileItem user={user} />
+
+            }
 
             <View style={styles.actionsProfile}>
                 <TouchableOpacity style={styles.circledButton}>

@@ -42,39 +42,13 @@ class AuthenticatorService implements AuthenticatorInterface {
 
             // console.log(`[TEST] currentUser ${JSON.stringify(currentUser)}`);
 
-            API.graphql(graphqlOperation(createUser, { input: currentUser }))
+            //API.graphql(graphqlOperation(createUser, { input: currentUser }))
 
         }
         catch (error) {
             Log.error(TAG, "Error in update user record: ", error);
         }
     }
-
-    // public signUp = () => {
-    //     const username = "cracker2";
-    //     const password = "SEGa1122__"
-    //     const email = "fafa2@gmail.com"
-    //     return Auth.signUp({
-    //         username,
-    //         password,
-    //         attributes: {
-    //             email,          // optional
-    //             // other custom attributes 
-    //         }
-    //     })
-    //         .then(user => console.log(`${TAG} signUp ${JSON.stringify(user)}`))
-    //         .catch(error => console.log('error signing up:', error));
-
-    // }
-
-    // public signIn = () => {
-    //     const username = "cracker2";
-    //     const password = "SEGa1122__"
-    //     const email = "fafa2@gmail.com"
-    //     return Auth.signIn(username, password)
-    //         .then(user => console.log("{user} ", user))
-    //         .catch(e => console.log('error signing in', e));
-    // }
 
     public signOut = async () => {
         try {
@@ -86,7 +60,6 @@ class AuthenticatorService implements AuthenticatorInterface {
     }
 
     public getUsername(): Promise<string> {
-        console.log("El useranme es",!!this.username + "y " + this.username)
         if (!!this.username) {
             return Promise.resolve(this.username);
         }

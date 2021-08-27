@@ -66,6 +66,43 @@ export const listUsers = /* GraphQL */ `
     }
   }
 `;
+export const userByUSERNAME = /* GraphQL */ `
+  query UserByUSERNAME(
+    $username: String
+    $sortDirection: ModelSortDirection
+    $filter: ModelUserFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    userByUSERNAME(
+      username: $username
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        username
+        name
+        surname
+        age
+        followers
+        likes
+        dislikes
+        profilePicture
+        description
+        location
+        updatedAt
+        createdAt
+        posts {
+          nextToken
+        }
+      }
+      nextToken
+    }
+  }
+`;
 export const getPost = /* GraphQL */ `
   query GetPost($id: ID!) {
     getPost(id: $id) {

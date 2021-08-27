@@ -51,7 +51,6 @@ class PostService {
             const postData = await API.graphql(graphqlOperation(listPosts,variables));
             const items = postData.data.listPosts.items;
 
-            console.log(JSON.stringify(postData))
             Log.info(TAG,`total post fetched: ${items.length} for user: ${username}`);
             return items;
         }

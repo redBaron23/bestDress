@@ -3,9 +3,16 @@ import {  AntDesign } from "@expo/vector-icons";
 import { Text, View, StyleSheet, TouchableOpacity } from "react-native";
 import User from "../model/User";
 
-const user = new User("RobertoC", "Carlos", "Menem", "23", 500, 25, 1, "https://depor.com/resizer/lMnBCnJ9c1GTjnj9SVL8hlQArjs=/1200x800/smart/filters:format(jpeg):quality(75)/cloudfront-us-east-1.images.arcpublishing.com/elcomercio/HEDDEGQREZEK5LXEDFZQHKNPWM.jpg", "Un pibe simple", "La Plata")
+interface Props {
+  user: User;
+}
 
-const ProfileItem = () => (
+
+const ProfileItem = ( props: Props ) => {
+  
+  const { user } = props;
+  
+  return (
   <View style={styles.containerProfileItem}>
     <View style={styles.matchesProfileItem}>
       <Text style={styles.matchesTextProfileItem}>
@@ -27,7 +34,7 @@ const ProfileItem = () => (
     </View>
 
   </View>
-);
+)};
 
 export default ProfileItem;
 

@@ -13,6 +13,7 @@ export type RootStackParamList = {
 export type BottomTabParamList = {
   [Dictionary.HOME]: undefined;
   [Dictionary.PROFILE]: undefined;
+  [Dictionary.SEARCH]: undefined;
 };
 
 export type TabHomeParamList = {
@@ -21,4 +22,8 @@ export type TabHomeParamList = {
 
 export type TabProfileParamList = {
   [Dictionary.PROFILE]: undefined;
+};
+
+export type TabSearchParamList = {
+  [Dictionary.SEARCH]: undefined;
 };

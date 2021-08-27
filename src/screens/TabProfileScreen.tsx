@@ -2,20 +2,29 @@ import React, { useState } from 'react';
 import AuthenticatorService from '../services/AuthenticatorService';
 import Profile from '../components/Profile';
 import { useEffect } from 'react';
-import PostModel from '../components/Post/PostModel';
-import PostService from '../services/PostService';
 
-export default function TabProfileScreen() {
+interface Props {
+  route?: any
+}
 
-    const [posts, setPosts] = useState<PostModel[]>([]);
+export default function TabProfileScreen(props: Props) {
+    const { route } = props;
+    const params = route.params;
+
+    const [username, setUsername] = useState<string>(params?.username);
 
     useEffect(() => {
+      if (params) {
+        return;
+      }
       AuthenticatorService.getUsername()
-        .then(username => PostService.fetchPostByUsername(username))
-        .then(setPosts);
+        .then(setUsername);
     }, []);
 
-  return (
-    <Profile posts={posts} isSelfProfile={true} />
+  return (<>
+    {
+      username &&  <Profile isSelfProfile={!params} username={username} />
+    }
+    </>
   );
 };

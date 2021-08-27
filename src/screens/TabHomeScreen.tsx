@@ -26,9 +26,9 @@ export default function TabHomeScreen() {
   return (
     <View style={styles.container}>
       <ScrollView style={styles.scrollView} contentContainerStyle={styles.scrollViewContainer} showsVerticalScrollIndicator={false} >
-        <Button mode="contained" onPress={onClick} >
+        {/* <Button mode="contained" onPress={onClick} >
           Auto create user
-        </Button>
+        </Button> */}
         {
           posts.map(post => <PostCard key={post.id} post={post} />)
         }

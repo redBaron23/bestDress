@@ -279,6 +279,12 @@ export type ModelUserConnection = {
   nextToken?: string | null,
 };
 
+export enum ModelSortDirection {
+  ASC = "ASC",
+  DESC = "DESC",
+}
+
+
 export type ModelPostFilterInput = {
   id?: ModelIDInput | null,
   userID?: ModelIDInput | null,
@@ -811,6 +817,41 @@ export type ListUsersQueryVariables = {
 
 export type ListUsersQuery = {
   listUsers?:  {
+    __typename: "ModelUserConnection",
+    items?:  Array< {
+      __typename: "User",
+      id: string,
+      username: string,
+      name: string,
+      surname: string,
+      age: number,
+      followers: number,
+      likes: number,
+      dislikes: number,
+      profilePicture: string,
+      description?: string | null,
+      location: string,
+      updatedAt: string,
+      createdAt: string,
+      posts?:  {
+        __typename: "ModelPostConnection",
+        nextToken?: string | null,
+      } | null,
+    } | null > | null,
+    nextToken?: string | null,
+  } | null,
+};
+
+export type UserByUSERNAMEQueryVariables = {
+  username?: string | null,
+  sortDirection?: ModelSortDirection | null,
+  filter?: ModelUserFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type UserByUSERNAMEQuery = {
+  userByUSERNAME?:  {
     __typename: "ModelUserConnection",
     items?:  Array< {
       __typename: "User",
