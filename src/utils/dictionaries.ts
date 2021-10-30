@@ -3,6 +3,7 @@ export enum Dictionary {
     PROFILE="PROFILE",
     SEARCH="SEARCH",
     OTHER_PROFILE="OTHER_PROFILE",
+    POST="POST",
 }
 
 export const dictionaries = {
@@ -10,10 +11,12 @@ export const dictionaries = {
         HOME: "Home",
         PROFILE: "Profile",
         SEARCH: "Search",
+        POST: "Post",
     },
     es:{
         HOME: "Inicio",
         PROFILE: "Perfil",
         SEARCH: "Buscar",
+        POST: "Publicar",
     },
 }

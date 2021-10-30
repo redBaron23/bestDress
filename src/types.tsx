@@ -14,6 +14,7 @@ export type BottomTabParamList = {
   [Dictionary.HOME]: undefined;
   [Dictionary.PROFILE]: undefined;
   [Dictionary.SEARCH]: undefined;
+  [Dictionary.POST]: undefined;
 };
 
 export type TabHomeParamList = {
@@ -27,3 +28,8 @@ export type TabProfileParamList = {
 export type TabSearchParamList = {
   [Dictionary.SEARCH]: undefined;
 };
+
+export type TabPostParamList = {
+  [Dictionary.POST]: undefined;
+};
+

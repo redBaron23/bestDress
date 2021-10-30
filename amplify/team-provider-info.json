@@ -14,6 +14,12 @@
     "categories": {
       "auth": {
         "bestdressd7b48f41": {}
+      },
+      "storage": {
+        "bestdressf1d3690a": {
+          "bucketName": "amplify-bestdress-dev-51332-deployment",
+          "region": "us-east-1"
+        }
       }
     }
   }
