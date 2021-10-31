@@ -1,5 +1,6 @@
 export default class User {
     constructor(
+        public id?: string,
         public username: string = "username PLACEHOLDER",
         public name: string = "name PLACEHOLDER",
         public surname: string = "surname PLACEHOLDER",
