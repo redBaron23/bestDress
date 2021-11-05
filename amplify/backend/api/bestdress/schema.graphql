@@ -1,30 +1,30 @@
 type User
-	@model
+  @model
   @key(name: "byUSERNAME", fields: ["username"], queryField: "userByUSERNAME")
-	@aws_cognito_user_pools
-	@auth(
-		rules: [
-			{
-				allow: owner
-				ownerField: "username"
-				operations: [create, delete, update]
-			}
-			{ allow: private, provider: userPools, operations: [read] }
-		]
-	) {
-	id: ID!
-	username: String!
-	name: String!
-	surname: String!
-	age: Int!
-	followers: Int!
-	likes: Int!
-	dislikes: Int!
-	profilePicture: String!
-	description: String
-	location: String!
-	posts: [Post] @connection(keyName: "byUser", fields: ["id"])
-	updatedAt: AWSDateTime!
+  @aws_cognito_user_pools
+  @auth(
+    rules: [
+      {
+        allow: owner
+        ownerField: "username"
+        operations: [create, delete, update]
+      }
+      { allow: private, provider: userPools, operations: [read] }
+    ]
+  ) {
+  id: ID!
+  username: String!
+  name: String!
+  surname: String!
+  age: Int!
+  followers: Int!
+  likes: Int!
+  dislikes: Int!
+  profilePicture: String!
+  description: String
+  location: String!
+  posts: [Post] @connection(keyName: "byUser", fields: ["id"])
+  updatedAt: AWSDateTime!
 }
 
 # type PublicProfile @model {
@@ -32,43 +32,45 @@ type User
 # }
 
 type Post
-	@model
-	@key(name: "byUser", fields: ["userID"])
-	@aws_cognito_user_pools
-	@auth(
-		rules: [
-			{ allow: owner, operations: [create, delete, update] }
-			{ allow: private, provider: userPools, operations: [read] }
-		]
-	) {
-	id: ID!
-	userID: ID!
-	username: String!
-	description: String
-	likes: Int!
-	dislikes: Int!
-	picture: String!
-	profilePicture: String!
-	user: User @connection(fields: ["userID"])
-	comments: [Comment] @connection(keyName: "byPost", fields: ["id"])
-	updatedAt: AWSDateTime!
+  @model
+  @key(name: "byUser", fields: ["userID"])
+  @aws_cognito_user_pools
+  @auth(
+    rules: [
+      { allow: owner, operations: [create, delete, update] }
+      { allow: private, provider: userPools, operations: [read, update] }
+    ]
+  ) {
+  id: ID!
+  userID: ID!
+  username: String!
+  description: String
+  likes: Int!
+  dislikes: Int!
+  picture: String!
+  profilePicture: String!
+  user: User @connection(fields: ["userID"])
+  comments: [Comment] @connection(keyName: "byPost", fields: ["id"])
+  updatedAt: AWSDateTime!
+  userLiked: AWSJSON
+  userDisliked: AWSJSON
 }
 
 type Comment
-	@model
-	@key(name: "byPost", fields: ["postID", "content"])
-	@aws_cognito_user_pools
-	@auth(
-		rules: [
-			{ allow: owner, operations: [create, delete, update] }
-			{ allow: private, provider: userPools, operations: [read] }
-		]
-	) {
-	id: ID!
-	postID: ID!
-	post: Post @connection(fields: ["postID"])
-	content: String!
-	updatedAt: AWSDateTime!
-	likes: Int!
-	dislikes: Int!
+  @model
+  @key(name: "byPost", fields: ["postID", "content"])
+  @aws_cognito_user_pools
+  @auth(
+    rules: [
+      { allow: owner, operations: [create, delete, update] }
+      { allow: private, provider: userPools, operations: [read] }
+    ]
+  ) {
+  id: ID!
+  postID: ID!
+  post: Post @connection(fields: ["postID"])
+  content: String!
+  updatedAt: AWSDateTime!
+  likes: Int!
+  dislikes: Int!
 }

@@ -4,22 +4,9 @@ import { Avatar, Button, Card, Paragraph } from "react-native-paper";
 import PostModel from "./PostModel";
 import { CommonActions, useNavigation } from "@react-navigation/native";
 import { Dictionary } from "../../utils/dictionaries";
+import PostService from "../../services/PostService";
 
 const LeftContent = (props) => <Avatar.Icon {...props} icon="account" />;
-
-interface Props {
-  post: PostModel;
-}
-
-function onRatedButtonPressed(
-  setItemPressed,
-  setOppositeItemPressed,
-  updatePost?: () => {}
-) {
-  setItemPressed((prevState) => !prevState);
-  setOppositeItemPressed(false);
-  //updatePost();
-}
 
 const handleNavigateToProfile = (navigation: any, searchQuery: string) => {
   if (!searchQuery) return;
@@ -33,6 +20,7 @@ const handleNavigateToProfile = (navigation: any, searchQuery: string) => {
       },
     })
   );
+
   setTimeout(() => {
     //Search username
     navigation.dispatch(
@@ -46,14 +34,41 @@ const handleNavigateToProfile = (navigation: any, searchQuery: string) => {
   }, 200);
 };
 
+interface Props {
+  post: PostModel;
+}
+
+
 export default function PostCard(props: Props) {
   const { post } = props;
-  const [isLiked, setIsLiked] = useState(false);
-  const [isDisliked, setIsDisliked] = useState(false);
+  const [isLiked, setIsLiked] = useState<boolean>(false);
+  const [isDisliked, setIsDisliked] = useState<boolean>(false);
   const navigation = useNavigation();
 
+  const onLikeButtonPressed = () => {
+    setIsLiked((prevState) => !prevState);
+    setIsDisliked(false);
+    PostService.likePost(post);
+    //TODO add clear post (santiago)
+  };
+
+  const onDislikeButtonPressed = () => {
+    setIsDisliked((prevState) => !prevState);
+    setIsLiked(false);
+    PostService.disLikePost(post)
+    //TODO add clear post (santiago)
+  };    
+
   return (
-    <Card style={{ width: "95%", borderRadius: 20, marginBottom: 10, backgroundColor: "#F1F1F1" }} elevation={5}>
+    <Card
+      style={{
+        width: "95%",
+        borderRadius: 20,
+        marginBottom: 10,
+        backgroundColor: "#F1F1F1",
+      }}
+      elevation={5}
+    >
       <TouchableOpacity
         onPress={() => {
           handleNavigateToProfile(navigation, post.username);
@@ -65,13 +80,13 @@ export default function PostCard(props: Props) {
       <Card.Actions>
         <Button
           icon={isLiked ? "thumb-up" : "thumb-up-outline"}
-          onPress={() => onRatedButtonPressed(setIsLiked, setIsDisliked)}
+          onPress={onLikeButtonPressed}
         >
           {post.likes + (isLiked ? 1 : 0)}
         </Button>
         <Button
           icon={isDisliked ? "thumb-down" : "thumb-down-outline"}
-          onPress={() => onRatedButtonPressed(setIsDisliked, setIsLiked)}
+          onPress={onDislikeButtonPressed}
         >
           {post.dislikes + (isDisliked ? 1 : 0)}
         </Button>

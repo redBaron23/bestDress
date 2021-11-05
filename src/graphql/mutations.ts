@@ -32,6 +32,8 @@ export const createUser = /* GraphQL */ `
           picture
           profilePicture
           updatedAt
+          userLiked
+          userDisliked
           createdAt
           owner
         }
@@ -70,6 +72,8 @@ export const updateUser = /* GraphQL */ `
           picture
           profilePicture
           updatedAt
+          userLiked
+          userDisliked
           createdAt
           owner
         }
@@ -108,6 +112,8 @@ export const deleteUser = /* GraphQL */ `
           picture
           profilePicture
           updatedAt
+          userLiked
+          userDisliked
           createdAt
           owner
         }
@@ -131,6 +137,8 @@ export const createPost = /* GraphQL */ `
       picture
       profilePicture
       updatedAt
+      userLiked
+      userDisliked
       createdAt
       user {
         id
@@ -182,6 +190,8 @@ export const updatePost = /* GraphQL */ `
       picture
       profilePicture
       updatedAt
+      userLiked
+      userDisliked
       createdAt
       user {
         id
@@ -233,6 +243,8 @@ export const deletePost = /* GraphQL */ `
       picture
       profilePicture
       updatedAt
+      userLiked
+      userDisliked
       createdAt
       user {
         id
@@ -292,6 +304,8 @@ export const createComment = /* GraphQL */ `
         picture
         profilePicture
         updatedAt
+        userLiked
+        userDisliked
         createdAt
         user {
           id
@@ -340,6 +354,8 @@ export const updateComment = /* GraphQL */ `
         picture
         profilePicture
         updatedAt
+        userLiked
+        userDisliked
         createdAt
         user {
           id
@@ -388,6 +404,8 @@ export const deleteComment = /* GraphQL */ `
         picture
         profilePicture
         updatedAt
+        userLiked
+        userDisliked
         createdAt
         user {
           id

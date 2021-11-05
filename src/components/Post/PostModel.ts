@@ -8,5 +8,7 @@ export default class PostModel {
         public id?: number,
         public likes: number = 0,
         public dislikes: number = 0,
+        public userLiked: string[] = [],
+        public userDisliked: string[] = [],
       ) {}
 }

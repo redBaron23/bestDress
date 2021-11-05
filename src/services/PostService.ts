@@ -1,6 +1,6 @@
 import { API, graphqlOperation } from "aws-amplify";
 import PostModel from "../components/Post/PostModel";
-import { createUser, createPost } from "../graphql/mutations";
+import { createUser, createPost, updatePost } from "../graphql/mutations";
 import { listPosts } from "../graphql/queries";
 import User from "../model/User";
 import Log from "../utils/Log";
@@ -44,11 +44,9 @@ class PostService {
     const post = new PostModel(username, imageUrl, description, userId);
 
     try {
-      console.log(`[TEST] going to create this post: ${JSON.stringify(post)}`);
-      const caca = await API.graphql(
+      await API.graphql(
         graphqlOperation(createPost, { input: post })
       );
-      console.log(caca);
     } catch (error) {
       Log.error(TAG, "Error creating post", error);
     }
@@ -95,6 +93,70 @@ class PostService {
       return [];
     }
   };
+
+  public likePost = async (post: PostModel) => {
+    await this.clearPostLike(post);
+    const currentUsername = await AuthenticatorService.getUsername();
+
+    const currentPost = {
+      postId: post.id,
+      userLiked: [ ...post.userLiked, currentUsername ],
+      userDisliked: post.userDisliked.filter(user => user != currentUsername),
+    }
+
+    try {
+      await API.graphql(
+        graphqlOperation(updatePost, { input: currentPost })
+      );
+    }
+
+    catch (error) {
+      Log.error(TAG, "Error liking post", error);
+    }
+  }
+
+  public disLikePost = async (post: PostModel) => {
+    await this.clearPostLike(post);
+    const currentUsername = await AuthenticatorService.getUsername();
+
+    const currentPost = {
+      postId: post.id,
+      userDisliked: [ ...post.userDisliked, currentUsername ],
+      userLiked: post.userDisliked.filter(user => user != currentUsername),
+    }
+
+    try {
+      await API.graphql(
+        graphqlOperation(updatePost, { input: currentPost })
+      );
+    }
+
+    catch (error) {
+      Log.error(TAG, "Error liking post", error);
+    }
+  }
+
+  public clearPostLike = async (post: PostModel) => {
+    const currentUsername = await AuthenticatorService.getUsername();
+
+    const currentPost = {
+      postId: post.id,
+      userLiked: post.userLiked.filter(user => user != currentUsername),
+      userDisliked: post.userDisliked.filter(user => user != currentUsername),
+    }
+
+    try {
+      API.graphql(
+        graphqlOperation(updatePost, { input: currentPost })
+      );
+    }
+
+    catch (error) {
+      Log.error(TAG, "Error liking post", error);
+    }
+  }
+
+
 }
 
 export default new PostService();
