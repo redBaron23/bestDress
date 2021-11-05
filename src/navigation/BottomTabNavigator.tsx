@@ -8,16 +8,18 @@ import { Button } from 'react-native-paper';
 import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
 import TabHomeScreen from '../screens/TabHomeScreen';
+import TabPostScreen from '../screens/TabPostScreen';
 import TabProfileScreen from '../screens/TabProfileScreen';
 import TabSearchScreen from '../screens/TabSearchScreen';
 import Translator from '../services/Translator';
-import { BottomTabParamList, TabHomeParamList, TabProfileParamList, TabSearchParamList } from '../types';
+import { BottomTabParamList, TabHomeParamList, TabPostParamList, TabProfileParamList, TabSearchParamList } from '../types';
 import { Dictionary } from '../utils/dictionaries';
 
 const BottomTab = createBottomTabNavigator<BottomTabParamList>();
 const TabProfileStack = createStackNavigator<TabProfileParamList>();
 const TabHomeStack = createStackNavigator<TabHomeParamList>();
 const TabSearchStack = createStackNavigator<TabSearchParamList>();
+const TabPostStack = createStackNavigator<TabPostParamList>();
 
 function TabBarIcon(props: { name: React.ComponentProps<typeof Ionicons>['name']; color: string }) {
   return <Ionicons size={30} style={{ marginBottom: -3 }} {...props} />;
@@ -46,6 +48,13 @@ export default function BottomTabNavigator() {
         }}
       />
       <BottomTab.Screen
+        name={Dictionary.POST}
+        component={TabPostNavigator}
+        options={{
+          tabBarIcon: ({ color }) => <TabBarIcon name="add" color={color} />,
+        }}
+      />      
+      <BottomTab.Screen
         name={Dictionary.PROFILE}
         component={TabProfileNavigator}
         options={{
@@ -55,8 +64,6 @@ export default function BottomTabNavigator() {
     </BottomTab.Navigator>
   );
 }
-
-
 
 function TabHomeNavigator() {
   return (
@@ -78,6 +85,18 @@ function TabProfileNavigator() {
         name={Dictionary.PROFILE}
         component={TabProfileScreen}
         options={{ headerTitle: Translator.translate(Dictionary.PROFILE) }}
+      />
+    </TabProfileStack.Navigator>
+  );
+}
+
+function TabPostNavigator() {
+  return (
+    <TabProfileStack.Navigator>
+      <TabProfileStack.Screen
+        name={Dictionary.POST}
+        component={TabPostScreen}
+        options={{ headerTitle: Translator.translate(Dictionary.POST) }}
       />
     </TabProfileStack.Navigator>
   );

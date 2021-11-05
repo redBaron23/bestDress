@@ -48,12 +48,12 @@ const handleNavigateToProfile = (navigation: any, searchQuery: string) => {
 
 export default function PostCard(props: Props) {
   const { post } = props;
-
   const [isLiked, setIsLiked] = useState(false);
   const [isDisliked, setIsDisliked] = useState(false);
   const navigation = useNavigation();
+
   return (
-    <Card style={{ width: "95%" }}>
+    <Card style={{ width: "95%", borderRadius: 20, marginBottom: 10, backgroundColor: "#F1F1F1" }} elevation={5}>
       <TouchableOpacity
         onPress={() => {
           handleNavigateToProfile(navigation, post.username);

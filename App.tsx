@@ -3,7 +3,7 @@ import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { Provider as PaperProvider } from 'react-native-paper';
-import Amplify, { Auth } from 'aws-amplify'
+import Amplify from 'aws-amplify'
 import config from './src/aws-exports'
 // @ts-ignore
 import { withAuthenticator } from 'aws-amplify-react-native'
@@ -12,8 +12,13 @@ Amplify.configure({
   ...config,
   Analytics: {
     disabled: true,
-  }
-})
+  },
+Storage: {
+  AWSS3: {
+    ...config,
+  },
+},
+});
 
 import useCachedResources from './src/hooks/useCachedResources';
 import useColorScheme from './src/hooks/useColorScheme';

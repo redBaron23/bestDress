@@ -27,5 +27,13 @@
       "dependsOn": [],
       "customAuth": false
     }
+  },
+  "storage": {
+    "bestdressf1d3690a": {
+      "service": "S3",
+      "serviceType": "imported",
+      "providerPlugin": "awscloudformation",
+      "dependsOn": []
+    }
   }
 }
