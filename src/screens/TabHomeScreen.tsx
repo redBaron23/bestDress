@@ -1,21 +1,23 @@
-import React, { useEffect, useState } from 'react';
-import { StyleSheet } from 'react-native';
-import { ScrollView } from 'react-native-gesture-handler';
-import { Button } from 'react-native-paper';
+import React, { useEffect, useState } from "react";
+import { StyleSheet } from "react-native";
+import { ScrollView } from "react-native-gesture-handler";
+import { Button } from "react-native-paper";
 
-import PostCard from '../components/Post/PostCard';
-import PostModel from '../components/Post/PostModel';
-import { Text, View } from '../components/Themed';
-import PostService from '../services/PostService';
+import PostCard from "../components/Post/PostCard";
+import PostModel from "../components/Post/PostModel";
+import { Text, View } from "../components/Themed";
+import PostService from "../services/PostService";
 
 export default function TabHomeScreen() {
-
   const [posts, setPosts] = useState<PostModel[]>([]);
 
   useEffect(() => {
-    PostService.fetchAllPost()
-      .then(setPosts)
-  }, [])
+    updatePosts();
+  }, []);
+
+  function updatePosts() {
+    PostService.fetchAllPost().then(setPosts);
+  }
 
   // const onClick = () => {
   //   //AuthenticatorService.signUp();
@@ -25,13 +27,18 @@ export default function TabHomeScreen() {
   // }
   return (
     <View style={styles.container}>
-      <ScrollView style={styles.scrollView} contentContainerStyle={styles.scrollViewContainer} showsVerticalScrollIndicator={false} >
+      <Button onPress={updatePosts}>Fafa</Button>
+      <ScrollView
+        style={styles.scrollView}
+        contentContainerStyle={styles.scrollViewContainer}
+        showsVerticalScrollIndicator={false}
+      >
         {/* <Button mode="contained" onPress={onClick} >
           Auto create user
         </Button> */}
-        {
-          posts.map(post => <PostCard key={post.id} post={post} />)
-        }
+        {posts.map((post) => (
+          <PostCard key={post.id} post={post} />
+        ))}
       </ScrollView>
     </View>
   );
@@ -40,13 +47,13 @@ export default function TabHomeScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
   },
-  scrollView: { width: '100%', flex: 1 },
+  scrollView: { width: "100%", flex: 1 },
   scrollViewContainer: {
-    alignItems: 'center',
+    alignItems: "center",
     paddingTop: "8%",
-    justifyContent: 'center',
+    justifyContent: "center",
   },
 });

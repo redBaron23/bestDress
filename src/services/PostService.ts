@@ -54,7 +54,7 @@ class PostService {
     }
   };
 
-  public fetchAllPost = async () => {
+  public fetchAllPost = async (): Promise<PostModel[]> => {
     try {
       const postData = await API.graphql(graphqlOperation(listPosts));
       const items = postData.data.listPosts.items;

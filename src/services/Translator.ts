@@ -4,9 +4,7 @@ import { dictionaries } from "../utils/dictionaries";
 const deviceLocale = "es_US";
 
 class Translator {
-
     private language: string;
-
 
     public translate(key) {
         return this.translateToLanguage(key, this.getDeviceLanguage());

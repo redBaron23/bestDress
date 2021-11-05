@@ -58,8 +58,8 @@ class AuthenticatorService implements AuthenticatorInterface {
   private updateUserRecord(): void {
     this.getUserId()
       .then(userId => new User(userId, this.username))
-      .then()
-    const currentUser = ;
+    //   .then()
+    // const currentUser = ;
     try {
       // console.log(`[TEST] currentUser ${JSON.stringify(currentUser)}`);
       API.graphql(graphqlOperation(createUser, { input: currentUser }))
