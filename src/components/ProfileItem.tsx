@@ -28,11 +28,11 @@ const ProfileItem = ( props: Props ) => {
 
     <View style={styles.info}>
       <Text style={styles.iconProfile}>
-        <AntDesign name="tags" size={24} color="black" />
+        <AntDesign name="tags" size={23} color="black" />
       </Text>
       <Text style={styles.infoContent}>{user.description}</Text>
     </View>
-
+   
   </View>
 )};
 

@@ -8,23 +8,23 @@ interface Props {
 }
 
 export default function TabProfileScreen(props: Props) {
-    const { route } = props;
-    const params = route.params;
+  const { route } = props;
+  const params = route.params;
 
-    const [username, setUsername] = useState<string>(params?.username);
+  const [username, setUsername] = useState<string>(params?.username);
 
-    useEffect(() => {
-      if (params) {
-        return;
-      }
-      AuthenticatorService.getUsername()
-        .then(setUsername);
-    }, []);
+  useEffect(() => {
+    if (params) {
+      return;
+    }
+    AuthenticatorService.getUsername()
+      .then(setUsername);
+  }, []);
 
   return (<>
     {
-      username &&  <Profile isSelfProfile={!params} username={username} />
+      username && <Profile isSelfProfile={!params} username={username} />
     }
-    </>
+  </>
   );
 };

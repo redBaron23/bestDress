@@ -20,10 +20,11 @@ import PostService from '../services/PostService';
 interface Props {
     username: string;
     isSelfProfile?: boolean;
+    navigation:any;
 }
 
 export default function Profile(props: Props) {
-    const {  username, isSelfProfile = false } = props;
+    const {  username, isSelfProfile = false,navigation } = props;
 
 
     const [ user,setUser ] = useState<User>();
@@ -69,9 +70,9 @@ export default function Profile(props: Props) {
                         <AntDesign name="logout" size={24} color="#FFFFFF" />
                     </TouchableOpacity>
                 }
-            </View>
+            </View >
             {
-                posts.map(post => <PostCard key={post.id} post={post} />)
+                posts.map(post => <PostCard key={post.id} navigation={navigation} post={post} />)
             }
         </ScrollView>
     );
@@ -88,6 +89,7 @@ const styles = StyleSheet.create({
     scrollViewContainer: {
         alignItems: 'center',
         justifyContent: 'center',
+        
     },
     top: {
         paddingTop: 50,
