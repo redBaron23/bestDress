@@ -99,9 +99,10 @@ class PostService {
     const currentUsername = await AuthenticatorService.getUsername();
 
     const currentPost = {
-      postId: post.id,
-      userLiked: [ ...post.userLiked, currentUsername ],
-      userDisliked: post.userDisliked.filter(user => user != currentUsername),
+      id: post.id,
+      likes: post.likes + 1,
+      userLiked: JSON.stringify([ ...post.userLiked, currentUsername ]),
+      userDisliked: JSON.stringify(this.getUserDisliked(post).filter(user => user != currentUsername)),
     }
 
     try {
@@ -120,9 +121,10 @@ class PostService {
     const currentUsername = await AuthenticatorService.getUsername();
 
     const currentPost = {
-      postId: post.id,
-      userDisliked: [ ...post.userDisliked, currentUsername ],
-      userLiked: post.userDisliked.filter(user => user != currentUsername),
+      id: post.id,
+      dislikes: post.dislikes + 1,
+      userDisliked: JSON.stringify([ ...post.userDisliked, currentUsername ]),
+      userLiked: JSON.stringify(this.getUserDisliked(post).filter(user => user != currentUsername)),
     }
 
     try {
@@ -140,9 +142,17 @@ class PostService {
     const currentUsername = await AuthenticatorService.getUsername();
 
     const currentPost = {
-      postId: post.id,
-      userLiked: post.userLiked.filter(user => user != currentUsername),
-      userDisliked: post.userDisliked.filter(user => user != currentUsername),
+      id: post.id,
+      userLiked: JSON.stringify(this.getUserLiked(post).filter(user => user != currentUsername)),
+      userDisliked: JSON.stringify(this.getUserDisliked(post).filter(user => user != currentUsername)),
+    } as PostModel;
+
+    if (post.userLiked.includes(currentUsername)) {
+      currentPost.dislikes = post.dislikes - 1;
+    }
+
+    if (post.userLiked.includes(currentUsername)) {
+      currentPost.likes = post.likes - 1;
     }
 
     try {
@@ -156,6 +166,13 @@ class PostService {
     }
   }
 
+    private getUserLiked = (post: PostModel): string[] => {
+      return JSON.parse(post.userLiked);
+    }
+
+    private getUserDisliked = (post: PostModel): string[] => {
+      return JSON.parse(post.userDisliked);
+    }
 
 }
 

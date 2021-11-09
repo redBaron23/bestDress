@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { TouchableOpacity, View } from "react-native";
 import { Avatar, Button, Card, Paragraph } from "react-native-paper";
 import PostModel from "./PostModel";
 import { CommonActions, useNavigation } from "@react-navigation/native";
 import { Dictionary } from "../../utils/dictionaries";
 import PostService from "../../services/PostService";
+import AuthenticatorService from "../../services/AuthenticatorService";
 
 const LeftContent = (props) => <Avatar.Icon {...props} icon="account" />;
 
@@ -38,26 +39,43 @@ interface Props {
   post: PostModel;
 }
 
-
 export default function PostCard(props: Props) {
   const { post } = props;
   const [isLiked, setIsLiked] = useState<boolean>(false);
   const [isDisliked, setIsDisliked] = useState<boolean>(false);
+  const [likes, setLikes] = useState<number>(post.likes);
+  const [ dislikes, setDislikes] = useState<number>(post.dislikes);
   const navigation = useNavigation();
+
+  useEffect(() => {
+    AuthenticatorService.getUsername()
+      .then(myUsername => {
+        post.userLiked.includes(myUsername) && setIsLiked(true);
+        post.userDisliked.includes(myUsername) && setIsDisliked(true);
+      })
+  },[post]);
 
   const onLikeButtonPressed = () => {
     setIsLiked((prevState) => !prevState);
-    setIsDisliked(false);
     PostService.likePost(post);
+    setLikes(prev => prev+1);
+    if (isDisliked) {
+      setDislikes(prev => prev-1);
+    }
+    setIsDisliked(false);
     //TODO add clear post (santiago)
   };
 
   const onDislikeButtonPressed = () => {
     setIsDisliked((prevState) => !prevState);
+    PostService.disLikePost(post);
+    setDislikes(prev => prev+1);
+    if (isLiked) {
+      setLikes(prev => prev-1);
+    }
     setIsLiked(false);
-    PostService.disLikePost(post)
     //TODO add clear post (santiago)
-  };    
+  };
 
   return (
     <Card
@@ -76,19 +94,19 @@ export default function PostCard(props: Props) {
       >
         <Card.Title title={post.username} left={LeftContent} />
       </TouchableOpacity>
-      <Card.Cover source={{ uri: post.picture }} />
+      <Card.Cover nativeID={post.id} source={{ uri: post.picture }} />
       <Card.Actions>
         <Button
           icon={isLiked ? "thumb-up" : "thumb-up-outline"}
           onPress={onLikeButtonPressed}
         >
-          {post.likes + (isLiked ? 1 : 0)}
+          {likes}
         </Button>
         <Button
           icon={isDisliked ? "thumb-down" : "thumb-down-outline"}
           onPress={onDislikeButtonPressed}
         >
-          {post.dislikes + (isDisliked ? 1 : 0)}
+          {dislikes}
         </Button>
       </Card.Actions>
       <Card.Content>
