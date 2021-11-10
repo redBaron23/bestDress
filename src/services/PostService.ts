@@ -30,7 +30,7 @@ class PostService {
     );
   };
 
-  public createPost = async (imageUri: string, description: string) => {
+  public createPost = async (imageUri: string, description: string): Promise<any> => {
     const [username, imageUrl, userId] = await Promise.all([
       AuthenticatorService.getUsername(),
       this.uploadImage(imageUri),
@@ -44,7 +44,7 @@ class PostService {
     const post = new PostModel(username, imageUrl, description, userId);
 
     try {
-      await API.graphql(
+      return await API.graphql(
         graphqlOperation(createPost, { input: post })
       );
     } catch (error) {

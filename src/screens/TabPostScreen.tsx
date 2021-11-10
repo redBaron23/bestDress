@@ -9,6 +9,7 @@ import {
   TouchableOpacity,
   Dimensions,
   Platform,
+  Image,
 } from "react-native";
 import * as ImagePicker from "expo-image-picker";
 import Storage from "@aws-amplify/storage";
@@ -35,6 +36,7 @@ export default function TabPostScreen(props: Props) {
   const [title, setTitle] = useState<string>("");
   const [description, setDescription] = useState<string>("");
   const [image, setImage] = useState<string>("");
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   useEffect(() => {
     // (async () => {
@@ -70,13 +72,16 @@ export default function TabPostScreen(props: Props) {
     }
   };
 
+  const toggleLoading = () => setIsLoading((prev) => !prev);
+
   const handleUpload = async () => {
     // const [username] = await Promise.all([
     //   AuthenticatorService.getUsername(),
     //   // AuthenticatorService.get
 
     // ]);
-    PostService.createPost(image, description);
+    toggleLoading();
+    PostService.createPost(image, description).then(toggleLoading);
     // fetch(image)
     //   .then(response => response.blob())
     //   .then(blob => Storage.put(`${new Date().getTime()}/${image}`,blob,{
@@ -96,7 +101,6 @@ export default function TabPostScreen(props: Props) {
 
   return (
     <View style={styles.container}>
-      {/* <TextInput value={title} placeholder="Title" onChangeText={setTitle} /> */}
       <View style={styles.textInputContainer}>
         <TextInput
           value={description}
@@ -106,11 +110,18 @@ export default function TabPostScreen(props: Props) {
           style={styles.textInput}
         />
       </View>
+      {/* <TextInput value={title} placeholder="Title" onChangeText={setTitle} /> */}
+      {!!image ? <Image source={{ uri: image }} style={{ width: 200, height: 200 }} /> : <View style={{ width: 200, height: 200 }}/>}
       <View style={styles.buttonContainer}>
         <Button mode="contained" onPress={pickImage} style={styles.button}>
           {Translator.translate(Dictionary.PICK_IMAGE)}
         </Button>
-        <Button mode="contained" onPress={handleUpload} style={styles.button}>
+        <Button
+          mode="contained"
+          onPress={handleUpload}
+          style={styles.button}
+          loading={isLoading}
+        >
           {Translator.translate(Dictionary.UPLOAD)}
         </Button>
       </View>
