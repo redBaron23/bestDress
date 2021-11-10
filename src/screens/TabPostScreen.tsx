@@ -8,15 +8,15 @@ import {
   View,
   TouchableOpacity,
   Dimensions,
-  Button,
   Platform,
 } from "react-native";
-import { onChange } from "react-native-reanimated";
-import { TextInput } from "react-native-gesture-handler";
 import * as ImagePicker from "expo-image-picker";
 import Storage from "@aws-amplify/storage";
 import PostService from "../services/PostService";
 import PostModel from "../components/Post/PostModel";
+import { TextInput, Button } from "react-native-paper";
+import Translator from "../services/Translator";
+import { Dictionary } from "../utils/dictionaries";
 
 const WINDOW_HEIGHT = Dimensions.get("window").height;
 const CAPTURE_SIZE = Math.floor(WINDOW_HEIGHT * 0.08);
@@ -74,9 +74,9 @@ export default function TabPostScreen(props: Props) {
     // const [username] = await Promise.all([
     //   AuthenticatorService.getUsername(),
     //   // AuthenticatorService.get
-    
+
     // ]);
-    PostService.createPost(image,description);
+    PostService.createPost(image, description);
     // fetch(image)
     //   .then(response => response.blob())
     //   .then(blob => Storage.put(`${new Date().getTime()}/${image}`,blob,{
@@ -97,13 +97,23 @@ export default function TabPostScreen(props: Props) {
   return (
     <View style={styles.container}>
       {/* <TextInput value={title} placeholder="Title" onChangeText={setTitle} /> */}
-      <TextInput
-        value={description}
-        placeholder="Description"
-        onChangeText={setDescription}
-      />
-      <Button title="Pick an image from camera roll" onPress={pickImage} />
-      <Button title="Upload" onPress={handleUpload} />
+      <View style={styles.textInputContainer}>
+        <TextInput
+          value={description}
+          label={Translator.translate(Dictionary.DESCRIPTION)}
+          onChangeText={setDescription}
+          mode="outlined"
+          style={styles.textInput}
+        />
+      </View>
+      <View style={styles.buttonContainer}>
+        <Button mode="contained" onPress={pickImage} style={styles.button}>
+          {Translator.translate(Dictionary.PICK_IMAGE)}
+        </Button>
+        <Button mode="contained" onPress={handleUpload} style={styles.button}>
+          {Translator.translate(Dictionary.UPLOAD)}
+        </Button>
+      </View>
       {/* <Camera style={styles.camera} type={type}>
           <View style={styles.buttonContainer}>
             <TouchableOpacity
@@ -132,21 +142,30 @@ export default function TabPostScreen(props: Props) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "space-evenly",
   },
-  camera: {
+  textInputContainer: {
+    margin: 10,
+    padding: 2,
+    width: "75%",
+  },
+  textInput: {},
+  buttonsContainer: {
     flex: 1,
+    flexDirection: "column",
+    width: "50%",
   },
   buttonContainer: {
-    flex: 1,
-    justifyContent: "center",
-    backgroundColor: "transparent",
-    flexDirection: "row",
-    alignItems: "flex-start",
-    margin: 20,
+    margin: 10,
+    padding: 2,
+    width: "75%",
   },
   button: {
-    flex: 0.7,
-    alignSelf: "flex-end",
+    marginTop: 10,
+    padding: 2,
+    width: "100%",
   },
   text: {
     fontSize: 18,
