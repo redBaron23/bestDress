@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   StyleSheet,
   Dimensions,
+  RefreshControl,
 } from "react-native";
 import ProfileItem from "../components/ProfileItem";
 import { Ionicons, AntDesign } from "@expo/vector-icons";
@@ -27,17 +28,28 @@ export default function Profile(props: Props) {
 
   const [user, setUser] = useState<User>();
   const [posts, setPosts] = useState<PostModel[]>([]);
+  const [refreshing, setRefreshing] = useState<boolean>(false);
 
   useEffect(() => {
     PostService.fetchPostByUsername(username).then(setPosts);
     UserService.getUser(username).then(setUser);
   }, [username]);
 
+  function updatePosts() {
+    setRefreshing(true);
+    PostService.fetchAllPost().then((posts) => {
+      setPosts(posts);
+      setRefreshing(false);
+    });
+  }
   return (
     <ScrollView
       style={styles.scrollView}
       contentContainerStyle={styles.scrollViewContainer}
       showsVerticalScrollIndicator={false}
+      refreshControl={
+        <RefreshControl refreshing={refreshing} onRefresh={updatePosts} />
+      }
     >
       <ImageBackground
         source={require("../assets/images/goku.jpg")}

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { StyleSheet } from "react-native";
+import { RefreshControl, StyleSheet } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { Button } from "react-native-paper";
 
@@ -10,13 +10,18 @@ import PostService from "../services/PostService";
 
 export default function TabHomeScreen() {
   const [posts, setPosts] = useState<PostModel[]>([]);
+  const [refreshing, setRefreshing] = useState<boolean>(false);
 
   useEffect(() => {
     updatePosts();
   }, []);
 
   function updatePosts() {
-    PostService.fetchAllPost().then(setPosts);
+    setRefreshing(true);
+    PostService.fetchAllPost().then(posts => {
+      setPosts(posts);
+      setRefreshing(false);
+    });
   }
 
   // const onClick = () => {
@@ -27,11 +32,15 @@ export default function TabHomeScreen() {
   // }
   return (
     <View style={styles.container}>
-      <Button onPress={updatePosts}>Fafa</Button>
       <ScrollView
         style={styles.scrollView}
         contentContainerStyle={styles.scrollViewContainer}
         showsVerticalScrollIndicator={false}
+        refreshControl={
+          <RefreshControl
+            refreshing={refreshing}
+            onRefresh={updatePosts}
+          />}
       >
         {/* <Button mode="contained" onPress={onClick} >
           Auto create user
