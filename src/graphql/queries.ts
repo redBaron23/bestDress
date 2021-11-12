@@ -16,6 +16,7 @@ export const getUser = /* GraphQL */ `
       profilePicture
       description
       location
+      category
       updatedAt
       createdAt
       posts {
@@ -58,6 +59,7 @@ export const listUsers = /* GraphQL */ `
         profilePicture
         description
         location
+        category
         updatedAt
         createdAt
         posts {
@@ -95,6 +97,7 @@ export const userByUSERNAME = /* GraphQL */ `
         profilePicture
         description
         location
+        category
         updatedAt
         createdAt
         posts {
@@ -132,6 +135,7 @@ export const getPost = /* GraphQL */ `
         profilePicture
         description
         location
+        category
         updatedAt
         createdAt
         posts {
@@ -187,6 +191,7 @@ export const listPosts = /* GraphQL */ `
           profilePicture
           description
           location
+          category
           updatedAt
           createdAt
         }
@@ -234,6 +239,7 @@ export const getComment = /* GraphQL */ `
           profilePicture
           description
           location
+          category
           updatedAt
           createdAt
         }

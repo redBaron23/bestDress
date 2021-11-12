@@ -22,6 +22,10 @@ export const dictionaries = {
         UPLOAD: "Upload",
         DELETE: "Delete",
         EDIT: "Edit",
+        SUMMER: "Summer",
+        WINTER: "Winter",
+        AUTUMN: "Autumn",
+        SPRING: "Spring",
     },
     es:{
         HOME: "Inicio",
@@ -33,5 +37,9 @@ export const dictionaries = {
         UPLOAD: "Subir",
         DELETE: "Borrar",
         EDIT: "Editar",
+        SUMMER: "Verano",
+        WINTER: "Invierno",
+        AUTUMN: "Otoño",
+        SPRING: "Primavera",
     },
 }

@@ -19,6 +19,7 @@ export const createUser = /* GraphQL */ `
       profilePicture
       description
       location
+      category
       updatedAt
       createdAt
       posts {
@@ -59,6 +60,7 @@ export const updateUser = /* GraphQL */ `
       profilePicture
       description
       location
+      category
       updatedAt
       createdAt
       posts {
@@ -99,6 +101,7 @@ export const deleteUser = /* GraphQL */ `
       profilePicture
       description
       location
+      category
       updatedAt
       createdAt
       posts {
@@ -152,6 +155,7 @@ export const createPost = /* GraphQL */ `
         profilePicture
         description
         location
+        category
         updatedAt
         createdAt
         posts {
@@ -205,6 +209,7 @@ export const updatePost = /* GraphQL */ `
         profilePicture
         description
         location
+        category
         updatedAt
         createdAt
         posts {
@@ -258,6 +263,7 @@ export const deletePost = /* GraphQL */ `
         profilePicture
         description
         location
+        category
         updatedAt
         createdAt
         posts {
@@ -319,6 +325,7 @@ export const createComment = /* GraphQL */ `
           profilePicture
           description
           location
+          category
           updatedAt
           createdAt
         }
@@ -369,6 +376,7 @@ export const updateComment = /* GraphQL */ `
           profilePicture
           description
           location
+          category
           updatedAt
           createdAt
         }
@@ -419,6 +427,7 @@ export const deleteComment = /* GraphQL */ `
           profilePicture
           description
           location
+          category
           updatedAt
           createdAt
         }

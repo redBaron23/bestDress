@@ -19,6 +19,9 @@ import { TextInput, Button } from "react-native-paper";
 import Translator from "../services/Translator";
 import { Dictionary } from "../utils/dictionaries";
 import { CommonActions, useNavigation } from "@react-navigation/core";
+import { Category } from "../components/Post/Category";
+import DropDown from "react-native-paper-dropdown";
+import CustomDropDown from "../components/CustomDropDown";
 
 const WINDOW_HEIGHT = Dimensions.get("window").height;
 const CAPTURE_SIZE = Math.floor(WINDOW_HEIGHT * 0.08);
@@ -27,6 +30,43 @@ const TAG = "TabPostScreen";
 interface Props {
   route?: any;
 }
+
+const genderList = [
+  {
+    label: "Male",
+    value: "male",
+  },
+  {
+    label: "Female",
+    value: "female",
+  },
+  {
+    label: "Others",
+    value: "others",
+  },
+];
+const colorList = [
+  {
+    label: "White",
+    value: "white",
+  },
+  {
+    label: "Red",
+    value: "red",
+  },
+  {
+    label: "Blue",
+    value: "blue",
+  },
+  {
+    label: "Green",
+    value: "green",
+  },
+  {
+    label: "Orange",
+    value: "orange",
+  },
+];
 
 export default function TabPostScreen(props: Props) {
   const { route } = props;
@@ -39,6 +79,8 @@ export default function TabPostScreen(props: Props) {
   const [description, setDescription] = useState<string>("");
   const [image, setImage] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [showDropDown, setShowDropDown] = useState<boolean>(true);
+  const [gender, setGender] = useState<string>("");
 
   useEffect(() => {
     // (async () => {
@@ -110,12 +152,17 @@ export default function TabPostScreen(props: Props) {
           onPressOut={undefined}
         />
       </View>
+      <Text>{Translator.translate(Category.SUMMER)}</Text>
       {!!image ? (
         <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />
-      ) : (
-        <View style={{ width: 200, height: 200 }} />
-      )}
+        ) : (
+          <View style={{ width: 200, height: 200 }} />
+          )}
       <View style={styles.buttonContainer}>
+      <View>
+          <CustomDropDown />
+
+      </View>
         <Button mode="contained" onPress={pickImage} style={styles.button}>
           {Translator.translate(Dictionary.PICK_IMAGE)}
         </Button>
@@ -128,27 +175,6 @@ export default function TabPostScreen(props: Props) {
           {Translator.translate(Dictionary.UPLOAD)}
         </Button>
       </View>
-      {/* <Camera style={styles.camera} type={type}>
-          <View style={styles.buttonContainer}>
-            <TouchableOpacity
-              style={styles.button}
-              onPress={() => {
-                setType(
-                  type === Camera.Constants.Type.back
-                    ? Camera.Constants.Type.front
-                    : Camera.Constants.Type.back
-                );
-              }}>
-              <Text style={styles.text}> Flip </Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-            activeOpacity={0.7}
-            // disabled={!isCameraReady}
-            // onPress={onSnap}
-            style={styles.capture}
-            />
-          </View>
-        </Camera> */}
     </View>
   );
 }

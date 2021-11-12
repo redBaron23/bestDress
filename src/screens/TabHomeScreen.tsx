@@ -34,12 +34,6 @@ export default function TabHomeScreen(props: Props) {
     });
   }
 
-  // const onClick = () => {
-  //   //AuthenticatorService.signUp();
-  //   // AuthenticatorService.signOut();
-  //   const post = new PostModel("pato.toledo", "2ff1eb87-edcf-4337-b8e2-7f8006cf4f72", 201, 352, "https://cdn.pixabay.com/photo/2013/07/13/11/43/tux-158547_960_720.png", "Este es tux buena gente", "https://upload.wikimedia.org/wikipedia/commons/0/01/LinuxCon_Europe_Linus_Torvalds_03_%28cropped%29.jpg")
-  //   PostService.createPost(post);
-  // }
   return (
     <View style={styles.container}>
       <ScrollView

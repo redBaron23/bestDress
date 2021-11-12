@@ -14,6 +14,7 @@ export type CreateUserInput = {
   profilePicture: string,
   description?: string | null,
   location: string,
+  category?: string | null,
   updatedAt?: string | null,
 };
 
@@ -27,6 +28,7 @@ export type ModelUserConditionInput = {
   profilePicture?: ModelStringInput | null,
   description?: ModelStringInput | null,
   location?: ModelStringInput | null,
+  category?: ModelStringInput | null,
   updatedAt?: ModelStringInput | null,
   and?: Array< ModelUserConditionInput | null > | null,
   or?: Array< ModelUserConditionInput | null > | null,
@@ -98,6 +100,7 @@ export type User = {
   profilePicture: string,
   description?: string | null,
   location: string,
+  category?: string | null,
   updatedAt: string,
   createdAt: string,
   posts?: ModelPostConnection | null,
@@ -159,6 +162,7 @@ export type UpdateUserInput = {
   profilePicture?: string | null,
   description?: string | null,
   location?: string | null,
+  category?: string | null,
   updatedAt?: string | null,
 };
 
@@ -275,6 +279,7 @@ export type ModelUserFilterInput = {
   profilePicture?: ModelStringInput | null,
   description?: ModelStringInput | null,
   location?: ModelStringInput | null,
+  category?: ModelStringInput | null,
   updatedAt?: ModelStringInput | null,
   and?: Array< ModelUserFilterInput | null > | null,
   or?: Array< ModelUserFilterInput | null > | null,
@@ -341,6 +346,7 @@ export type CreateUserMutation = {
     profilePicture: string,
     description?: string | null,
     location: string,
+    category?: string | null,
     updatedAt: string,
     createdAt: string,
     posts?:  {
@@ -385,6 +391,7 @@ export type UpdateUserMutation = {
     profilePicture: string,
     description?: string | null,
     location: string,
+    category?: string | null,
     updatedAt: string,
     createdAt: string,
     posts?:  {
@@ -429,6 +436,7 @@ export type DeleteUserMutation = {
     profilePicture: string,
     description?: string | null,
     location: string,
+    category?: string | null,
     updatedAt: string,
     createdAt: string,
     posts?:  {
@@ -487,6 +495,7 @@ export type CreatePostMutation = {
       profilePicture: string,
       description?: string | null,
       location: string,
+      category?: string | null,
       updatedAt: string,
       createdAt: string,
       posts?:  {
@@ -546,6 +555,7 @@ export type UpdatePostMutation = {
       profilePicture: string,
       description?: string | null,
       location: string,
+      category?: string | null,
       updatedAt: string,
       createdAt: string,
       posts?:  {
@@ -605,6 +615,7 @@ export type DeletePostMutation = {
       profilePicture: string,
       description?: string | null,
       location: string,
+      category?: string | null,
       updatedAt: string,
       createdAt: string,
       posts?:  {
@@ -673,6 +684,7 @@ export type CreateCommentMutation = {
         profilePicture: string,
         description?: string | null,
         location: string,
+        category?: string | null,
         updatedAt: string,
         createdAt: string,
       } | null,
@@ -728,6 +740,7 @@ export type UpdateCommentMutation = {
         profilePicture: string,
         description?: string | null,
         location: string,
+        category?: string | null,
         updatedAt: string,
         createdAt: string,
       } | null,
@@ -783,6 +796,7 @@ export type DeleteCommentMutation = {
         profilePicture: string,
         description?: string | null,
         location: string,
+        category?: string | null,
         updatedAt: string,
         createdAt: string,
       } | null,
@@ -814,6 +828,7 @@ export type GetUserQuery = {
     profilePicture: string,
     description?: string | null,
     location: string,
+    category?: string | null,
     updatedAt: string,
     createdAt: string,
     posts?:  {
@@ -861,6 +876,7 @@ export type ListUsersQuery = {
       profilePicture: string,
       description?: string | null,
       location: string,
+      category?: string | null,
       updatedAt: string,
       createdAt: string,
       posts?:  {
@@ -896,6 +912,7 @@ export type UserByUSERNAMEQuery = {
       profilePicture: string,
       description?: string | null,
       location: string,
+      category?: string | null,
       updatedAt: string,
       createdAt: string,
       posts?:  {
@@ -939,6 +956,7 @@ export type GetPostQuery = {
       profilePicture: string,
       description?: string | null,
       location: string,
+      category?: string | null,
       updatedAt: string,
       createdAt: string,
       posts?:  {
@@ -1001,6 +1019,7 @@ export type ListPostsQuery = {
         profilePicture: string,
         description?: string | null,
         location: string,
+        category?: string | null,
         updatedAt: string,
         createdAt: string,
       } | null,
@@ -1055,6 +1074,7 @@ export type GetCommentQuery = {
         profilePicture: string,
         description?: string | null,
         location: string,
+        category?: string | null,
         updatedAt: string,
         createdAt: string,
       } | null,
@@ -1122,6 +1142,7 @@ export type OnCreateUserSubscription = {
     profilePicture: string,
     description?: string | null,
     location: string,
+    category?: string | null,
     updatedAt: string,
     createdAt: string,
     posts?:  {
@@ -1161,6 +1182,7 @@ export type OnUpdateUserSubscription = {
     profilePicture: string,
     description?: string | null,
     location: string,
+    category?: string | null,
     updatedAt: string,
     createdAt: string,
     posts?:  {
@@ -1200,6 +1222,7 @@ export type OnDeleteUserSubscription = {
     profilePicture: string,
     description?: string | null,
     location: string,
+    category?: string | null,
     updatedAt: string,
     createdAt: string,
     posts?:  {
@@ -1253,6 +1276,7 @@ export type OnCreatePostSubscription = {
       profilePicture: string,
       description?: string | null,
       location: string,
+      category?: string | null,
       updatedAt: string,
       createdAt: string,
       posts?:  {
@@ -1307,6 +1331,7 @@ export type OnUpdatePostSubscription = {
       profilePicture: string,
       description?: string | null,
       location: string,
+      category?: string | null,
       updatedAt: string,
       createdAt: string,
       posts?:  {
@@ -1361,6 +1386,7 @@ export type OnDeletePostSubscription = {
       profilePicture: string,
       description?: string | null,
       location: string,
+      category?: string | null,
       updatedAt: string,
       createdAt: string,
       posts?:  {
@@ -1424,6 +1450,7 @@ export type OnCreateCommentSubscription = {
         profilePicture: string,
         description?: string | null,
         location: string,
+        category?: string | null,
         updatedAt: string,
         createdAt: string,
       } | null,
@@ -1474,6 +1501,7 @@ export type OnUpdateCommentSubscription = {
         profilePicture: string,
         description?: string | null,
         location: string,
+        category?: string | null,
         updatedAt: string,
         createdAt: string,
       } | null,
@@ -1524,6 +1552,7 @@ export type OnDeleteCommentSubscription = {
         profilePicture: string,
         description?: string | null,
         location: string,
+        category?: string | null,
         updatedAt: string,
         createdAt: string,
       } | null,

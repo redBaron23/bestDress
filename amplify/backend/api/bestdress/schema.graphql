@@ -23,6 +23,7 @@ type User
   profilePicture: String!
   description: String
   location: String!
+  category: String
   posts: [Post] @connection(keyName: "byUser", fields: ["id"])
   updatedAt: AWSDateTime!
 }
