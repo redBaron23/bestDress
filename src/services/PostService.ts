@@ -1,6 +1,6 @@
 import { API, graphqlOperation } from "aws-amplify";
 import PostModel from "../components/Post/PostModel";
-import { createUser, createPost, updatePost } from "../graphql/mutations";
+import { createUser, createPost, updatePost, deletePost } from "../graphql/mutations";
 import { listPosts } from "../graphql/queries";
 import User from "../model/User";
 import Log from "../utils/Log";
@@ -101,7 +101,7 @@ class PostService {
     const currentPost = {
       id: post.id,
       likes: post.likes + 1,
-      userLiked: JSON.stringify([ ...post.userLiked, currentUsername ]),
+      userLiked: JSON.stringify([...post.userLiked, currentUsername]),
       userDisliked: JSON.stringify(this.getUserDisliked(post).filter(user => user != currentUsername)),
     }
 
@@ -123,7 +123,7 @@ class PostService {
     const currentPost = {
       id: post.id,
       dislikes: post.dislikes + 1,
-      userDisliked: JSON.stringify([ ...post.userDisliked, currentUsername ]),
+      userDisliked: JSON.stringify([...post.userDisliked, currentUsername]),
       userLiked: JSON.stringify(this.getUserDisliked(post).filter(user => user != currentUsername)),
     }
 
@@ -166,14 +166,25 @@ class PostService {
     }
   }
 
-    private getUserLiked = (post: PostModel): string[] => {
-      return JSON.parse(post.userLiked);
+  public deletePost = async (post: PostModel) => {
+    try {
+      await API.graphql(
+        graphqlOperation(deletePost, { input: {id: post.id} })
+      );
     }
 
-    private getUserDisliked = (post: PostModel): string[] => {
-      return JSON.parse(post.userDisliked);
+    catch (error) {
+      Log.error(TAG, "Error deleting post", error);
     }
+  }
 
+  private getUserLiked = (post: PostModel): string[] => {
+    return JSON.parse(post.userLiked);
+  }
+
+  private getUserDisliked = (post: PostModel): string[] => {
+    return JSON.parse(post.userDisliked);
+  }
 }
 
 export default new PostService();

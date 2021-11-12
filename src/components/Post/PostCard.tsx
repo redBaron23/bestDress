@@ -1,11 +1,22 @@
 import React, { useEffect, useState } from "react";
 import { TouchableOpacity, View } from "react-native";
-import { Avatar, Button, Card, Paragraph } from "react-native-paper";
+import {
+  Avatar,
+  Button,
+  Card,
+  Divider,
+  IconButton,
+  List,
+  Menu,
+  Paragraph,
+} from "react-native-paper";
 import PostModel from "./PostModel";
 import { CommonActions, useNavigation } from "@react-navigation/native";
 import { Dictionary } from "../../utils/dictionaries";
 import PostService from "../../services/PostService";
 import AuthenticatorService from "../../services/AuthenticatorService";
+import DropDownMenu from "../DropDownMenu";
+import Translator from "../../services/Translator";
 
 const LeftContent = (props) => <Avatar.Icon {...props} icon="account" />;
 
@@ -37,45 +48,58 @@ const handleNavigateToProfile = (navigation: any, searchQuery: string) => {
 
 interface Props {
   post: PostModel;
+  refresh: () => void;
 }
 
 export default function PostCard(props: Props) {
-  const { post } = props;
+  const { post, refresh } = props;
   const [isLiked, setIsLiked] = useState<boolean>(false);
   const [isDisliked, setIsDisliked] = useState<boolean>(false);
   const [likes, setLikes] = useState<number>(post.likes);
-  const [ dislikes, setDislikes] = useState<number>(post.dislikes);
+  const [dislikes, setDislikes] = useState<number>(post.dislikes);
+  const [ isMenuOpen, setIsMenuOpen ] = useState<boolean>(false);
   const navigation = useNavigation();
 
   useEffect(() => {
-    AuthenticatorService.getUsername()
-      .then(myUsername => {
-        post.userLiked.includes(myUsername) && setIsLiked(true);
-        post.userDisliked.includes(myUsername) && setIsDisliked(true);
-      })
-  },[post]);
+    AuthenticatorService.getUsername().then((myUsername) => {
+      post.userLiked.includes(myUsername) && setIsLiked(true);
+      post.userDisliked.includes(myUsername) && setIsDisliked(true);
+    });
+  }, [post]);
 
   const onLikeButtonPressed = () => {
     setIsLiked((prevState) => !prevState);
     PostService.likePost(post);
-    setLikes(prev => prev+1);
-    if (isDisliked) {
-      setDislikes(prev => prev-1);
+    if (isLiked) {
+      setLikes(likes - 1);
+      setIsLiked(false);
+    } else {
+      setLikes(likes + 1);
+      setIsLiked(true);
     }
-    setIsDisliked(false);
-    //TODO add clear post (santiago)
   };
 
   const onDislikeButtonPressed = () => {
     setIsDisliked((prevState) => !prevState);
     PostService.disLikePost(post);
-    setDislikes(prev => prev+1);
-    if (isLiked) {
-      setLikes(prev => prev-1);
+    if (isDisliked) {
+      setDislikes(dislikes - 1);
+      setIsDisliked(false);
+    } else {
+      setDislikes(dislikes + 1);
+      setIsDisliked(true);
     }
-    setIsLiked(false);
-    //TODO add clear post (santiago)
   };
+
+  const toggleMenu = () => {
+    setIsMenuOpen((prevState) => !prevState);
+  }
+
+  const onDeletePost = () => {
+    toggleMenu();
+    PostService.deletePost(post)
+      .then(refresh);
+  }
 
   return (
     <Card
@@ -92,7 +116,29 @@ export default function PostCard(props: Props) {
           handleNavigateToProfile(navigation, post.username);
         }}
       >
-        <Card.Title title={post.username} left={LeftContent} />
+        <Card.Title
+          title={post.username}
+          left={LeftContent}
+          right={(props) => (
+            <>
+              <Menu
+                visible={isMenuOpen}
+                onDismiss={toggleMenu}
+                anchor={
+                  <IconButton
+                    {...props}
+                    icon="dots-vertical"
+                    onPress={toggleMenu}
+                  />
+                }
+              >
+                <Menu.Item onPress={onDeletePost} title={Translator.translate(Dictionary.DELETE)} />
+                <Menu.Item disabled onPress={() => {setIsLiked(false)}} title={Translator.translate(Dictionary.EDIT)} />
+                <Divider />
+              </Menu>
+            </>
+          )}
+        />
       </TouchableOpacity>
       <Card.Cover nativeID={post.id} source={{ uri: post.picture }} />
       <Card.Actions>

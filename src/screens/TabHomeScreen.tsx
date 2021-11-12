@@ -46,7 +46,7 @@ export default function TabHomeScreen() {
           Auto create user
         </Button> */}
         {posts.map((post) => (
-          <PostCard key={post.id} post={post} />
+          <PostCard key={post.id} post={post} refresh={updatePosts}/>
         ))}
       </ScrollView>
     </View>

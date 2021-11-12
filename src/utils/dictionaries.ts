@@ -7,6 +7,8 @@ export enum Dictionary {
     DESCRIPTION="DESCRIPTION",
     PICK_IMAGE="PICK_IMAGE",
     UPLOAD="UPLOAD",
+    DELETE="DELETE",
+    EDIT="EDIT",
 }
 
 export const dictionaries = {
@@ -18,6 +20,8 @@ export const dictionaries = {
         DESCRIPTION: "Description",
         PICK_IMAGE: "Pick image from camera...",
         UPLOAD: "Upload",
+        DELETE: "Delete",
+        EDIT: "Edit",
     },
     es:{
         HOME: "Inicio",
@@ -27,5 +31,7 @@ export const dictionaries = {
         DESCRIPTION: "Descripcion",
         PICK_IMAGE: "Elegi una imagen...",
         UPLOAD: "Subir",
+        DELETE: "Borrar",
+        EDIT: "Editar",
     },
 }

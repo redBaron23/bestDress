@@ -83,7 +83,7 @@ export default function Profile(props: Props) {
         )}
       </View>
       {posts.map((post) => (
-        <PostCard key={post.id} post={post} />
+        <PostCard key={post.id} post={post} refresh={updatePosts} />
       ))}
     </ScrollView>
   );
