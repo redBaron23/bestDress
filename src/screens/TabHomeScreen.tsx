@@ -8,13 +8,23 @@ import PostModel from "../components/Post/PostModel";
 import { Text, View } from "../components/Themed";
 import PostService from "../services/PostService";
 
-export default function TabHomeScreen() {
+interface Props {
+  route: any;
+}
+
+export default function TabHomeScreen(props: Props) {
+  const { route } = props;
   const [posts, setPosts] = useState<PostModel[]>([]);
   const [refreshing, setRefreshing] = useState<boolean>(false);
+  const params = route.params;
 
   useEffect(() => {
     updatePosts();
   }, []);
+
+  useEffect(() => {
+    updatePosts();
+  }, [params?.update]);
 
   function updatePosts() {
     setRefreshing(true);

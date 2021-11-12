@@ -18,6 +18,7 @@ import PostModel from "../components/Post/PostModel";
 import { TextInput, Button } from "react-native-paper";
 import Translator from "../services/Translator";
 import { Dictionary } from "../utils/dictionaries";
+import { CommonActions, useNavigation } from "@react-navigation/core";
 
 const WINDOW_HEIGHT = Dimensions.get("window").height;
 const CAPTURE_SIZE = Math.floor(WINDOW_HEIGHT * 0.08);
@@ -30,6 +31,7 @@ interface Props {
 export default function TabPostScreen(props: Props) {
   const { route } = props;
   const params = route.params;
+  const navigation = useNavigation();
 
   const [hasPermission, setHasPermission] = useState<boolean>();
   // const [type, setType] = useState(Camera.Constants.Type.back);
@@ -75,29 +77,25 @@ export default function TabPostScreen(props: Props) {
   const toggleLoading = () => setIsLoading((prev) => !prev);
 
   const handleUpload = async () => {
-    // const [username] = await Promise.all([
-    //   AuthenticatorService.getUsername(),
-    //   // AuthenticatorService.get
-
-    // ]);
     toggleLoading();
-    PostService.createPost(image, description).then(toggleLoading);
-    // fetch(image)
-    //   .then(response => response.blob())
-    //   .then(blob => Storage.put(`${new Date().getTime()}/${image}`,blob,{
-    //     contentType: "image/jpeg", // contentType is optional
-    //   }))
-    //   .then(response => console.log("LA RESPUESTA",JSON.stringify(response)))
-
-    //   .catch(e => console.log(`[${TAG}] Error trying to upload ${image}: ${e} `))
+    PostService.createPost(image, description).then(() => {
+      toggleLoading();
+      setTimeout(() => {
+        navigation.dispatch(
+          CommonActions.navigate({
+            name: Dictionary.HOME,
+            params: {
+              update: true,
+            },
+          })
+        );
+      }, 500);
+    });
   };
 
   if (hasPermission === null) {
     return <View />;
   }
-  // if (hasPermission === false) {
-  //   return <View>No access to camera</View>;
-  // }
 
   return (
     <View style={styles.container}>
@@ -108,10 +106,15 @@ export default function TabPostScreen(props: Props) {
           onChangeText={setDescription}
           mode="outlined"
           style={styles.textInput}
+          onPressIn={undefined}
+          onPressOut={undefined}
         />
       </View>
-      {/* <TextInput value={title} placeholder="Title" onChangeText={setTitle} /> */}
-      {!!image ? <Image source={{ uri: image }} style={{ width: 200, height: 200 }} /> : <View style={{ width: 200, height: 200 }}/>}
+      {!!image ? (
+        <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />
+      ) : (
+        <View style={{ width: 200, height: 200 }} />
+      )}
       <View style={styles.buttonContainer}>
         <Button mode="contained" onPress={pickImage} style={styles.button}>
           {Translator.translate(Dictionary.PICK_IMAGE)}
