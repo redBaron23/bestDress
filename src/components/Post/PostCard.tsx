@@ -58,7 +58,16 @@ export default function PostCard(props: Props) {
   const [likes, setLikes] = useState<number>(post.likes);
   const [dislikes, setDislikes] = useState<number>(post.dislikes);
   const [ isMenuOpen, setIsMenuOpen ] = useState<boolean>(false);
+  const [myUsername, setMyUsername] = useState<string>("");
   const navigation = useNavigation();
+
+  useEffect(() => {
+    AuthenticatorService.getUsername().then((myUsername) => {
+      post.userLiked.includes(myUsername) && setIsLiked(true);
+      post.userDisliked.includes(myUsername) && setIsDisliked(true);
+      setMyUsername(myUsername);
+    });
+  }, []);
 
   useEffect(() => {
     AuthenticatorService.getUsername().then((myUsername) => {
@@ -70,11 +79,17 @@ export default function PostCard(props: Props) {
   const onLikeButtonPressed = () => {
     setIsLiked((prevState) => !prevState);
     PostService.likePost(post);
+
+    if (isDisliked) {
+      setDislikes(prev => prev-1);
+      setIsDisliked(false);
+    }
+
     if (isLiked) {
-      setLikes(likes - 1);
+      setLikes(prev => prev - 1);
       setIsLiked(false);
     } else {
-      setLikes(likes + 1);
+      setLikes(prev => prev + 1);
       setIsLiked(true);
     }
   };
@@ -82,11 +97,16 @@ export default function PostCard(props: Props) {
   const onDislikeButtonPressed = () => {
     setIsDisliked((prevState) => !prevState);
     PostService.disLikePost(post);
+    if (isLiked) {
+      setLikes(prev => prev -1);
+      setIsLiked(false);
+    }
+
     if (isDisliked) {
-      setDislikes(dislikes - 1);
+      setDislikes(prev => prev - 1);
       setIsDisliked(false);
     } else {
-      setDislikes(dislikes + 1);
+      setDislikes(prev => prev + 1);
       setIsDisliked(true);
     }
   };
@@ -132,7 +152,7 @@ export default function PostCard(props: Props) {
                   />
                 }
               >
-                <Menu.Item onPress={onDeletePost} title={Translator.translate(Dictionary.DELETE)} />
+                <Menu.Item disabled={myUsername !== post.username} onPress={onDeletePost} title={Translator.translate(Dictionary.DELETE)} />
                 <Menu.Item disabled onPress={() => {setIsLiked(false)}} title={Translator.translate(Dictionary.EDIT)} />
                 <Divider />
               </Menu>

@@ -152,17 +152,17 @@ export default function TabPostScreen(props: Props) {
           onPressOut={undefined}
         />
       </View>
-      <Text>{Translator.translate(Category.SUMMER)}</Text>
+      {/* <Text>{Translator.translate(Category.SUMMER)}</Text> */}
       {!!image ? (
         <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />
         ) : (
           <View style={{ width: 200, height: 200 }} />
           )}
       <View style={styles.buttonContainer}>
-      <View>
+      {/* <View>
           <CustomDropDown />
 
-      </View>
+      </View> */}
         <Button mode="contained" onPress={pickImage} style={styles.button}>
           {Translator.translate(Dictionary.PICK_IMAGE)}
         </Button>

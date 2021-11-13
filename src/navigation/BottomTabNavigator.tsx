@@ -34,28 +34,28 @@ export default function BottomTabNavigator() {
       backBehavior="none"
       tabBarOptions={{ activeTintColor: Colors[colorScheme].tint }}>
       <BottomTab.Screen
-        name={Dictionary.HOME}
+        name={Translator.translate(Dictionary.HOME)}
         component={TabHomeNavigator}
         options={{
           tabBarIcon: ({ color }) => <TabBarIcon name="home" color={color} />,
         }}
       />
       <BottomTab.Screen
-        name={Dictionary.SEARCH}
+        name={Translator.translate(Dictionary.SEARCH)}
         component={TabSearchNavigator}
         options={{
           tabBarIcon: ({ color }) => <TabBarIcon name="search" color={color} />,
         }}
       />
       <BottomTab.Screen
-        name={Dictionary.POST}
+        name={Translator.translate(Dictionary.POST)}
         component={TabPostNavigator}
         options={{
           tabBarIcon: ({ color }) => <TabBarIcon name="add" color={color} />,
         }}
       />      
       <BottomTab.Screen
-        name={Dictionary.PROFILE}
+        name={Translator.translate(Dictionary.PROFILE)}
         component={TabProfileNavigator}
         options={{
           tabBarIcon: ({ color }) => <TabBarIcon name="person-circle-sharp" color={color} />,
