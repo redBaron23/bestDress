@@ -17,6 +17,7 @@ import PostService from "../../services/PostService";
 import AuthenticatorService from "../../services/AuthenticatorService";
 import DropDownMenu from "../DropDownMenu";
 import Translator from "../../services/Translator";
+import EditInput from "../common/EditInput";
 
 const LeftContent = (props) => <Avatar.Icon {...props} icon="account" />;
 
@@ -52,13 +53,15 @@ interface Props {
 }
 
 export default function PostCard(props: Props) {
-  const { post, refresh } = props;
+  const { refresh } = props;
   const [isLiked, setIsLiked] = useState<boolean>(false);
   const [isDisliked, setIsDisliked] = useState<boolean>(false);
-  const [likes, setLikes] = useState<number>(post.likes);
-  const [dislikes, setDislikes] = useState<number>(post.dislikes);
-  const [ isMenuOpen, setIsMenuOpen ] = useState<boolean>(false);
+  const [likes, setLikes] = useState<number>(props.post.likes);
+  const [dislikes, setDislikes] = useState<number>(props.post.dislikes);
+  const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
   const [myUsername, setMyUsername] = useState<string>("");
+  const [isEditMode, setIsEditMode] = useState<boolean>(false);
+  const [post, setPost] = useState<PostModel>(props.post);
   const navigation = useNavigation();
 
   useEffect(() => {
@@ -81,15 +84,15 @@ export default function PostCard(props: Props) {
     PostService.likePost(post);
 
     if (isDisliked) {
-      setDislikes(prev => prev-1);
+      setDislikes((prev) => prev - 1);
       setIsDisliked(false);
     }
 
     if (isLiked) {
-      setLikes(prev => prev - 1);
+      setLikes((prev) => prev - 1);
       setIsLiked(false);
     } else {
-      setLikes(prev => prev + 1);
+      setLikes((prev) => prev + 1);
       setIsLiked(true);
     }
   };
@@ -98,28 +101,36 @@ export default function PostCard(props: Props) {
     setIsDisliked((prevState) => !prevState);
     PostService.disLikePost(post);
     if (isLiked) {
-      setLikes(prev => prev -1);
+      setLikes((prev) => prev - 1);
       setIsLiked(false);
     }
 
     if (isDisliked) {
-      setDislikes(prev => prev - 1);
+      setDislikes((prev) => prev - 1);
       setIsDisliked(false);
     } else {
-      setDislikes(prev => prev + 1);
+      setDislikes((prev) => prev + 1);
       setIsDisliked(true);
     }
   };
 
   const toggleMenu = () => {
     setIsMenuOpen((prevState) => !prevState);
-  }
+  };
 
-  const onDeletePost = () => {
+  const handleDeletePost = () => {
     toggleMenu();
-    PostService.deletePost(post)
-      .then(refresh);
-  }
+    PostService.deletePost(post).then(refresh);
+  };
+
+  const toggleEditMode = () => setIsEditMode((prevState) => !prevState);
+
+  const handleEditDescription = (newDescription: string) => {
+    const newPost = { ...post, description: newDescription };
+    setPost(newPost);
+    PostService.editPost(newPost)
+      .finally(toggleEditMode);
+  };
 
   return (
     <Card
@@ -152,8 +163,16 @@ export default function PostCard(props: Props) {
                   />
                 }
               >
-                <Menu.Item disabled={myUsername !== post.username} onPress={onDeletePost} title={Translator.translate(Dictionary.DELETE)} />
-                <Menu.Item disabled onPress={() => {setIsLiked(false)}} title={Translator.translate(Dictionary.EDIT)} />
+                <Menu.Item
+                  disabled={myUsername !== post.username}
+                  onPress={handleDeletePost}
+                  title={Translator.translate(Dictionary.DELETE)}
+                />
+                <Menu.Item
+                  disabled={myUsername !== post.username}
+                  onPress={toggleEditMode}
+                  title={Translator.translate(Dictionary.EDIT)}
+                />
                 <Divider />
               </Menu>
             </>
@@ -176,7 +195,14 @@ export default function PostCard(props: Props) {
         </Button>
       </Card.Actions>
       <Card.Content>
-        <Paragraph>{post.description}</Paragraph>
+        {isEditMode ? (
+          <EditInput
+            value={post.description!}
+            onChange={handleEditDescription}
+          />
+        ) : (
+          <Paragraph>{post.description}</Paragraph>
+        )}
       </Card.Content>
     </Card>
   );

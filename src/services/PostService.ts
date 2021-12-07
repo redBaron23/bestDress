@@ -178,6 +178,22 @@ class PostService {
     }
   }
 
+  public editPost = async (post: PostModel) => {
+
+    try {
+      await API.graphql(
+        graphqlOperation(updatePost, { input: {
+          id: post.id,
+          description: post.description,
+        } })
+      );
+    }
+
+    catch (error) {
+      Log.error(TAG, "Error editing post", error);
+    }
+  }
+
   private getUserLiked = (post: PostModel): string[] => {
     return JSON.parse(post.userLiked);
   }

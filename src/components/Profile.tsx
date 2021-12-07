@@ -37,7 +37,7 @@ export default function Profile(props: Props) {
 
   function updatePosts() {
     setRefreshing(true);
-    PostService.fetchAllPost().then((posts) => {
+    PostService.fetchPostByUsername(username).then((posts) => {
       setPosts(posts);
       setRefreshing(false);
     });
