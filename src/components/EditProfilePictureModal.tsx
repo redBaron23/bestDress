@@ -59,17 +59,22 @@ const EditProfilePictureModal = (props: Props) => {
         onDismiss={props.onClose}
         contentContainerStyle={styles.containerStyle}
       >
-        {!!image ? (
-          <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />
-        ) : (
-          <View style={{ width: 200, height: 200 }} />
-        )}
-        <Button mode="text" onPress={pickImage} >
-          {Translator.translate(Dictionary.PICK_IMAGE)}
-        </Button>
+        <View style={styles.mainContainer}>
+          {!!image ? (
+            <Image
+              source={{ uri: image }}
+              style={{ width: 200, height: 200 }}
+            />
+          ) : (
+            <View style={{ width: 200, height: 200 }} />
+          )}
+          <Button mode="text" onPress={pickImage}>
+            {Translator.translate(Dictionary.PICK_IMAGE)}
+          </Button>
+        </View>
         <View style={styles.buttonsModal}>
           <Button mode="text" onPress={props.onClose}>
-            Cancel
+            {Translator.translate(Dictionary.CANCEL)}
           </Button>
           <Button
             mode="contained"
@@ -77,7 +82,7 @@ const EditProfilePictureModal = (props: Props) => {
             onPress={handleUpdate}
             disabled={!image}
           >
-            Confirm
+            {Translator.translate(Dictionary.CONFIRM)}
           </Button>
         </View>
       </Modal>
@@ -95,6 +100,12 @@ const styles = StyleSheet.create({
   containerStyle: {
     padding: 30,
     backgroundColor: "#fff",
+  },
+  mainContainer: {
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
   },
 });
 

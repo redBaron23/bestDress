@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { View, StyleSheet } from "react-native";
 import { Button, Modal, Portal, TextInput } from "react-native-paper";
 import User from "../model/User";
+import Translator from "../services/Translator";
+import { Dictionary } from "../utils/dictionaries";
 
 interface Props {
   open: boolean;
@@ -40,7 +42,7 @@ const EditProfileModal = (props: Props) => {
           onChangeText={setName}
           onPressIn={undefined}
           onPressOut={undefined}
-          label="Name"
+          label={Translator.translate(Dictionary.NAME)}
         />
         <TextInput
           mode="outlined"
@@ -56,7 +58,7 @@ const EditProfileModal = (props: Props) => {
           onChangeText={(text) => setAge(parseInt(text))}
           onPressIn={undefined}
           onPressOut={undefined}
-          label="Age"
+          label={Translator.translate(Dictionary.AGE)}
         />
         <TextInput
           mode="outlined"
@@ -64,7 +66,7 @@ const EditProfileModal = (props: Props) => {
           onChangeText={setDescription}
           onPressIn={undefined}
           onPressOut={undefined}
-          label="Description"
+          label={Translator.translate(Dictionary.DESCRIPTION)}
         />
         <TextInput
           mode="outlined"
@@ -72,14 +74,14 @@ const EditProfileModal = (props: Props) => {
           onChangeText={setLocation}
           onPressIn={undefined}
           onPressOut={undefined}
-          label="Location"
+          label={Translator.translate(Dictionary.LOCATION)}
         />
         <View style={styles.buttonsModal}>
           <Button mode="text" onPress={props.onClose}>
-            Cancel
+            {Translator.translate(Dictionary.CANCEL)}
           </Button>
           <Button mode="contained" onPress={handleUpdate}>
-            Confirm
+            {Translator.translate(Dictionary.CONFIRM)}
           </Button>
         </View>
       </Modal>

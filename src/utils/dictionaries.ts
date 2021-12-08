@@ -9,6 +9,12 @@ export enum Dictionary {
     UPLOAD="UPLOAD",
     DELETE="DELETE",
     EDIT="EDIT",
+    NAME="NAME",
+    SURNAME="SURNAME",
+    AGE="AGE",
+    LOCATION="LOCATION",
+    CANCEL="CANCEL",
+    CONFIRM="CONFIRM",
 }
 
 export const dictionaries = {
@@ -26,6 +32,12 @@ export const dictionaries = {
         WINTER: "Winter",
         AUTUMN: "Autumn",
         SPRING: "Spring",
+        NAME: "Name",
+        SURNAME: "Surname",
+        AGE: "Age",
+        LOCATION: "Location",
+        CANCEL: "Cancel",
+        CONFIRM: "Confirm",
     },
     es:{
         HOME: "Inicio",
@@ -41,5 +53,11 @@ export const dictionaries = {
         WINTER: "Invierno",
         AUTUMN: "Otoño",
         SPRING: "Primavera",
+        NAME: "Nombre",
+        SURNAME: "Apellido",
+        AGE: "Edad",
+        LOCATION: "Ubicacion",
+        CANCEL: "Cancelar",
+        CONFIRM: "Confirmar",
     },
 }
