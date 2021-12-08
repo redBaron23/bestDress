@@ -74,7 +74,6 @@ export default function TabPostScreen(props: Props) {
   const navigation = useNavigation();
 
   const [hasPermission, setHasPermission] = useState<boolean>();
-  // const [type, setType] = useState(Camera.Constants.Type.back);
   const [title, setTitle] = useState<string>("");
   const [description, setDescription] = useState<string>("");
   const [image, setImage] = useState<string>("");
@@ -83,11 +82,6 @@ export default function TabPostScreen(props: Props) {
   const [gender, setGender] = useState<string>("");
 
   useEffect(() => {
-    // (async () => {
-    //   const { status } = await Camera.requestPermissionsAsync();
-    //   setHasPermission(status === 'granted');
-    // })();
-
     (async () => {
       const { status } =
         await ImagePicker.requestMediaLibraryPermissionsAsync();
@@ -96,10 +90,6 @@ export default function TabPostScreen(props: Props) {
       }
     })();
   }, []);
-
-  const handleChangeTitle = (e: any) => {
-    console.log(e);
-  };
 
   const pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
@@ -152,17 +142,12 @@ export default function TabPostScreen(props: Props) {
           onPressOut={undefined}
         />
       </View>
-      {/* <Text>{Translator.translate(Category.SUMMER)}</Text> */}
       {!!image ? (
         <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />
-        ) : (
-          <View style={{ width: 200, height: 200 }} />
-          )}
+      ) : (
+        <View style={{ width: 200, height: 200 }} />
+      )}
       <View style={styles.buttonContainer}>
-      {/* <View>
-          <CustomDropDown />
-
-      </View> */}
         <Button mode="contained" onPress={pickImage} style={styles.button}>
           {Translator.translate(Dictionary.PICK_IMAGE)}
         </Button>

@@ -20,6 +20,7 @@ import User from "../model/User";
 import PostService from "../services/PostService";
 import { Button, Modal, Portal, TextInput } from "react-native-paper";
 import EditProfileModal from "./EditProfileModal";
+import EditProfilePictureModal from "./EditProfilePictureModal";
 
 interface Props {
   username: string;
@@ -33,6 +34,8 @@ export default function Profile(props: Props) {
   const [posts, setPosts] = useState<PostModel[]>([]);
   const [refreshing, setRefreshing] = useState<boolean>(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState<boolean>(false);
+  const [isEditProfilePictureModalOpen, setIsEditProfilePictureModalOpen] =
+    useState<boolean>(false);
 
   useEffect(() => {
     UserService.getUser(username).then(setUser);
@@ -49,10 +52,20 @@ export default function Profile(props: Props) {
 
   const toggleModal = () => setIsEditModalOpen((prevState) => !prevState);
 
+  const toggleEditProfilePictureModal = () =>
+    setIsEditProfilePictureModalOpen((prevState) => !prevState);
+
   const handleUpdate = (updatedUser: User) => {
     UserService.editUser(updatedUser).then(() => {
       setUser(updatedUser);
       toggleModal();
+    });
+  };
+
+  const handleUpdatePicture = (updatedUser: User) => {
+    UserService.editUser(updatedUser).then(() => {
+      setUser(updatedUser);
+      toggleEditProfilePictureModal();
     });
   };
 
@@ -65,17 +78,31 @@ export default function Profile(props: Props) {
         <RefreshControl refreshing={refreshing} onRefresh={updatePosts} />
       }
     >
-      <ImageBackground
-        source={require("../assets/images/goku.jpg")}
-        style={styles.photo}
-      />
-      {!!user && (
-        <EditProfileModal
-          open={isEditModalOpen}
-          onClose={toggleModal}
-          user={user}
-          onUpdate={handleUpdate}
+      <TouchableOpacity onPress={toggleEditProfilePictureModal}>
+        <ImageBackground
+          source={
+            user?.profilePicture
+              ? {uri: user.profilePicture}
+              : require("../assets/images/goku.jpg")
+          }
+          style={styles.photo}
         />
+      </TouchableOpacity>
+      {!!user && (
+        <>
+          <EditProfileModal
+            open={isEditModalOpen}
+            onClose={toggleModal}
+            user={user}
+            onUpdate={handleUpdate}
+          />
+          <EditProfilePictureModal
+            isOpen={isEditProfilePictureModalOpen}
+            user={user}
+            onClose={toggleEditProfilePictureModal}
+            onSave={handleUpdatePicture}
+          />
+        </>
       )}
       {!!user && <ProfileItem user={user} />}
       <View style={styles.actionsProfile}>

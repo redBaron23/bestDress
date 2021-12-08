@@ -11,7 +11,7 @@ import AuthenticatorService from "./AuthenticatorService";
 const TAG = LogTags.POST_SERVICE;
 
 class PostService {
-  private uploadImage = (imageUri: string): Promise<string> => {
+  public uploadImage = (imageUri: string): Promise<string> => {
     return (
       fetch(imageUri)
         .then((response) => response.blob())

@@ -76,11 +76,9 @@ const EditProfileModal = (props: Props) => {
         />
         <View style={styles.buttonsModal}>
           <Button mode="text" onPress={props.onClose}>
-            {" "}
             Cancel
           </Button>
           <Button mode="contained" onPress={handleUpdate}>
-            {" "}
             Confirm
           </Button>
         </View>
