@@ -25,26 +25,33 @@ const handleNavigateToProfile = (navigation: any, searchQuery: string) => {
   if (!searchQuery) return;
 
   //Search username
+  // navigation.dispatch(
+  //   CommonActions.navigate({
+  //     name: Dictionary.SEARCH,
+  //     params: {
+  //       username: searchQuery,
+  //     },
+  //   })
+  // );
   navigation.dispatch(
     CommonActions.navigate({
-      name: Dictionary.SEARCH,
+      name: Dictionary.OTHER_PROFILE,
       params: {
         username: searchQuery,
       },
     })
   );
-
-  setTimeout(() => {
-    //Search username
-    navigation.dispatch(
-      CommonActions.navigate({
-        name: Dictionary.OTHER_PROFILE,
-        params: {
-          username: searchQuery,
-        },
-      })
-    );
-  }, 200);
+  // setTimeout(() => {
+  //   //Search username
+  //   navigation.dispatch(
+  //     CommonActions.navigate({
+  //       name: Dictionary.OTHER_PROFILE,
+  //       params: {
+  //         username: searchQuery,
+  //       },
+  //     })
+  //   );
+  // }, 200);
 };
 
 interface Props {
@@ -128,8 +135,7 @@ export default function PostCard(props: Props) {
   const handleEditDescription = (newDescription: string) => {
     const newPost = { ...post, description: newDescription };
     setPost(newPost);
-    PostService.editPost(newPost)
-      .finally(toggleEditMode);
+    PostService.editPost(newPost).finally(toggleEditMode);
   };
 
   return (

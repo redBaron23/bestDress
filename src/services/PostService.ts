@@ -179,7 +179,6 @@ class PostService {
   }
 
   public editPost = async (post: PostModel) => {
-
     try {
       await API.graphql(
         graphqlOperation(updatePost, { input: {

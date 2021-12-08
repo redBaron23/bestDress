@@ -7,6 +7,7 @@ import {
   StyleSheet,
   Dimensions,
   RefreshControl,
+  Text,
 } from "react-native";
 import ProfileItem from "../components/ProfileItem";
 import { Ionicons, AntDesign } from "@expo/vector-icons";
@@ -17,6 +18,8 @@ import { useEffect } from "react";
 import UserService from "../services/UserService";
 import User from "../model/User";
 import PostService from "../services/PostService";
+import { Button, Modal, Portal, TextInput } from "react-native-paper";
+import EditProfileModal from "./EditProfileModal";
 
 interface Props {
   username: string;
@@ -29,10 +32,11 @@ export default function Profile(props: Props) {
   const [user, setUser] = useState<User>();
   const [posts, setPosts] = useState<PostModel[]>([]);
   const [refreshing, setRefreshing] = useState<boolean>(false);
+  const [isEditModalOpen, setIsEditModalOpen] = useState<boolean>(false);
 
   useEffect(() => {
-    PostService.fetchPostByUsername(username).then(setPosts);
     UserService.getUser(username).then(setUser);
+    PostService.fetchPostByUsername(username).then(setPosts);
   }, [username]);
 
   function updatePosts() {
@@ -42,6 +46,16 @@ export default function Profile(props: Props) {
       setRefreshing(false);
     });
   }
+
+  const toggleModal = () => setIsEditModalOpen((prevState) => !prevState);
+
+  const handleUpdate = (updatedUser: User) => {
+    UserService.editUser(updatedUser).then(() => {
+      setUser(updatedUser);
+      toggleModal();
+    });
+  };
+
   return (
     <ScrollView
       style={styles.scrollView}
@@ -54,32 +68,32 @@ export default function Profile(props: Props) {
       <ImageBackground
         source={require("../assets/images/goku.jpg")}
         style={styles.photo}
-      >
-        <View style={styles.top}>
-          <TouchableOpacity></TouchableOpacity>
-
-          <TouchableOpacity></TouchableOpacity>
-        </View>
-      </ImageBackground>
-
-      {user && <ProfileItem user={user} />}
-
+      />
+      {!!user && (
+        <EditProfileModal
+          open={isEditModalOpen}
+          onClose={toggleModal}
+          user={user}
+          onUpdate={handleUpdate}
+        />
+      )}
+      {!!user && <ProfileItem user={user} />}
       <View style={styles.actionsProfile}>
-        <TouchableOpacity style={styles.circledButton}>
-          <Ionicons name="add" size={30} color="#FFFFFF"></Ionicons>
-        </TouchableOpacity>
-
-        <TouchableOpacity style={styles.circledButton}>
-          <AntDesign name="like1" size={24} color="#FFFFFF" />
-        </TouchableOpacity>
-
         {isSelfProfile && (
-          <TouchableOpacity
-            style={styles.circledButton}
-            onPress={AuthenticatorService.signOut}
-          >
-            <AntDesign name="logout" size={24} color="#FFFFFF" />
-          </TouchableOpacity>
+          <>
+            <TouchableOpacity
+              style={styles.circledButton}
+              onPress={toggleModal}
+            >
+              <Ionicons name="pencil" size={30} color="#FFFFFF"></Ionicons>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.circledButton}
+              onPress={AuthenticatorService.signOut}
+            >
+              <AntDesign name="logout" size={24} color="#FFFFFF" />
+            </TouchableOpacity>
+          </>
         )}
       </View>
       {posts.map((post) => (
