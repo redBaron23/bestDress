@@ -16,6 +16,7 @@ export enum Dictionary {
     CANCEL="CANCEL",
     CONFIRM="CONFIRM",
     AddAComment="AddAComment",
+    CLOSE="CLOSE",
 }
 
 export const dictionaries = {
@@ -40,6 +41,7 @@ export const dictionaries = {
         CANCEL: "Cancel",
         CONFIRM: "Confirm",
         AddAComment: "Add a comment",
+        CLOSE: "Close",
     },
     es:{
         HOME: "Inicio",
@@ -62,5 +64,6 @@ export const dictionaries = {
         CANCEL: "Cancelar",
         CONFIRM: "Confirmar",
         AddAComment: "Agregar un comentario",
+        CLOSE: "Cerrar",
     },
 }

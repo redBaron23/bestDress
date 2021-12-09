@@ -1,7 +1,7 @@
 import { API, graphqlOperation } from "aws-amplify";
 import PostModel from "../components/Post/PostModel";
 import { createUser, createPost, updatePost, deletePost } from "../graphql/mutations";
-import { listPosts } from "../graphql/queries";
+import { getPost, listPosts } from "../graphql/queries";
 import User from "../model/User";
 import Log from "../utils/Log";
 import LogTags from "../utils/LogTags";
@@ -92,6 +92,26 @@ class PostService {
     } catch (error) {
       Log.error(TAG, `Error fetching post byUsername : ${username}`, error);
       return [];
+    }
+  };
+
+  public fetchPostByPostID = async (postID: string, limit: number = 20): Promise<string> => {
+    try {
+
+      const postData = await API.graphql(
+        graphqlOperation(getPost,{ id: postID })
+      );
+      console.log(JSON.stringify(postData));
+      const post = postData.data.getPost;
+
+      Log.info(
+        TAG,
+        `post fetched: ${JSON.stringify(post)} for user: ${postID}`
+      );
+      return post;
+    } catch (error) {
+      Log.error(TAG, `Error fetching post by postID : ${postID}`, error);
+      return '';
     }
   };
 

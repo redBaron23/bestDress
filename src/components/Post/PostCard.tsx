@@ -20,8 +20,8 @@ import Translator from "../../services/Translator";
 import EditInput from "../common/EditInput";
 import Comment from "../../model/Comment";
 import CommentService from "../../services/CommentService";
-
-const LeftContent = (props) => <Avatar.Icon {...props} icon="account" />;
+import ViewCommentsModal from "../Comment/ViewCommentsModal";
+import UserService from "../../services/UserService";
 
 const handleNavigateToProfile = (navigation: any, searchQuery: string) => {
   if (!searchQuery) return;
@@ -72,6 +72,7 @@ export default function PostCard(props: Props) {
   const [isEditMode, setIsEditMode] = useState<boolean>(false);
   const [post, setPost] = useState<PostModel>(props.post);
   const [comments, setComments] = useState<Comment[]>([]);
+  const [profilePicture, setProfilePicture] = useState<string>("");
   const [seeCommentsMode, setSeeCommentsMode] = useState<boolean>(false);
 
   const navigation = useNavigation();
@@ -81,6 +82,7 @@ export default function PostCard(props: Props) {
       post.userLiked.includes(myUsername) && setIsLiked(true);
       post.userDisliked.includes(myUsername) && setIsDisliked(true);
       setMyUsername(myUsername);
+      // UserService.getProfilePicture(myUsername).then(setProfilePicture);
     });
 
     CommentService.getComments(post.id!).then(setComments);
@@ -145,14 +147,22 @@ export default function PostCard(props: Props) {
     PostService.editPost(newPost).finally(toggleEditMode);
   };
 
-  const handleViewComments = () => {};
-
   const handleCreateComment = (content: string) => {
     const newComment = new Comment(props.post.id!.toString(), content);
     CommentService.createComment(newComment).then((resComment) =>
       setComments((prev) => [...prev, resComment])
     );
   };
+
+  const toggleSeeCommentsMode = () =>
+    !!comments.length && setSeeCommentsMode((prevState) => !prevState);
+
+  const LeftContent = (secondaryProps: any) =>
+    false && !!profilePicture ? (
+      <Avatar.Image {...secondaryProps} source={{ uri: profilePicture }} />
+    ) : (
+      <Avatar.Icon {...secondaryProps} icon="account" />
+    );
 
   return (
     <Card
@@ -164,6 +174,11 @@ export default function PostCard(props: Props) {
       }}
       elevation={5}
     >
+      <ViewCommentsModal
+        open={seeCommentsMode}
+        onClose={toggleSeeCommentsMode}
+        comments={comments}
+      />
       <TouchableOpacity
         onPress={() => {
           handleNavigateToProfile(navigation, post.username);
@@ -215,7 +230,7 @@ export default function PostCard(props: Props) {
         >
           {dislikes}
         </Button>
-        <Button icon="comment-outline" onPress={handleViewComments}>
+        <Button icon="comment-outline" onPress={toggleSeeCommentsMode}>
           {comments.length}
         </Button>
       </Card.Actions>

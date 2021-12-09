@@ -49,6 +49,11 @@ class UserService {
         return this.getUser(username)
             .then(user => !!user)
     }
+
+    public async getProfilePicture (username: string): Promise<string> {
+        const user = await this.getUser(username);
+        return user.profilePicture;
+    }
 }
 
 export default new UserService();

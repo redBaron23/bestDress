@@ -30,12 +30,6 @@ function App() {
   const isLoadingComplete = useCachedResources();
   const colorScheme = useColorScheme();
 
-  // const currentCred = Auth.currentUserCredentials().then(console.log);
-  // const currentInfo = Auth.currentUserInfo().then(console.log);
-
- // console.log(`[TEST] Auth.currentUserCredentials ${JSON.stringify(currentCred)}`);
- // console.log(`[TEST] Auth.currentUserInfo ${JSON.stringify(currentInfo)}`);
-
  useEffect(() => {
    AuthenticatorService.initialize();
  },[])
