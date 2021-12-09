@@ -1,9 +1,13 @@
 import React, { useEffect, useState } from "react";
+import { StyleProp, TextStyle } from "react-native";
 import { TextInput } from "react-native-paper";
 
 interface Props {
   value: string;
   onChange: (value: string) => void;
+  style?: StyleProp<TextStyle>;
+  placeholder?: string;
+  clean?: boolean;
 }
 
 function EditInput(props: Props) {
@@ -19,16 +23,19 @@ function EditInput(props: Props) {
 
   const onBlur = () => {
     props.onChange(value);
+    props.clean && setValue("");
   };
 
   return (
     <TextInput
       mode="outlined"
       value={value}
+      placeholder={props.placeholder}
       onChangeText={onChange}
       onBlur={onBlur}
       onPressIn={undefined}
       onPressOut={onBlur}
+      style={props.style}
     />
   );
 }

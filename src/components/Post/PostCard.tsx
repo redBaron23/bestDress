@@ -18,6 +18,8 @@ import AuthenticatorService from "../../services/AuthenticatorService";
 import DropDownMenu from "../DropDownMenu";
 import Translator from "../../services/Translator";
 import EditInput from "../common/EditInput";
+import Comment from "../../model/Comment";
+import CommentService from "../../services/CommentService";
 
 const LeftContent = (props) => <Avatar.Icon {...props} icon="account" />;
 
@@ -69,6 +71,9 @@ export default function PostCard(props: Props) {
   const [myUsername, setMyUsername] = useState<string>("");
   const [isEditMode, setIsEditMode] = useState<boolean>(false);
   const [post, setPost] = useState<PostModel>(props.post);
+  const [comments, setComments] = useState<Comment[]>([]);
+  const [seeCommentsMode, setSeeCommentsMode] = useState<boolean>(false);
+
   const navigation = useNavigation();
 
   useEffect(() => {
@@ -77,6 +82,8 @@ export default function PostCard(props: Props) {
       post.userDisliked.includes(myUsername) && setIsDisliked(true);
       setMyUsername(myUsername);
     });
+
+    CommentService.getComments(post.id!).then(setComments);
   }, []);
 
   useEffect(() => {
@@ -136,6 +143,15 @@ export default function PostCard(props: Props) {
     const newPost = { ...post, description: newDescription };
     setPost(newPost);
     PostService.editPost(newPost).finally(toggleEditMode);
+  };
+
+  const handleViewComments = () => {};
+
+  const handleCreateComment = (content: string) => {
+    const newComment = new Comment(props.post.id!.toString(), content);
+    CommentService.createComment(newComment).then((resComment) =>
+      setComments((prev) => [...prev, resComment])
+    );
   };
 
   return (
@@ -199,6 +215,9 @@ export default function PostCard(props: Props) {
         >
           {dislikes}
         </Button>
+        <Button icon="comment-outline" onPress={handleViewComments}>
+          {comments.length}
+        </Button>
       </Card.Actions>
       <Card.Content>
         {isEditMode ? (
@@ -209,6 +228,13 @@ export default function PostCard(props: Props) {
         ) : (
           <Paragraph>{post.description}</Paragraph>
         )}
+        <EditInput
+          onChange={handleCreateComment}
+          value={""}
+          style={{ height: 30 }}
+          placeholder={Translator.translate(Dictionary.AddAComment)}
+          clean
+        />
       </Card.Content>
     </Card>
   );

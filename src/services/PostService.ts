@@ -49,6 +49,7 @@ class PostService {
       );
     } catch (error) {
       Log.error(TAG, "Error creating post", error);
+      return null;
     }
   };
 

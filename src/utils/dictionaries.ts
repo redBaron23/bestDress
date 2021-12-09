@@ -15,6 +15,7 @@ export enum Dictionary {
     LOCATION="LOCATION",
     CANCEL="CANCEL",
     CONFIRM="CONFIRM",
+    AddAComment="AddAComment",
 }
 
 export const dictionaries = {
@@ -38,6 +39,7 @@ export const dictionaries = {
         LOCATION: "Location",
         CANCEL: "Cancel",
         CONFIRM: "Confirm",
+        AddAComment: "Add a comment",
     },
     es:{
         HOME: "Inicio",
@@ -59,5 +61,6 @@ export const dictionaries = {
         LOCATION: "Ubicacion",
         CANCEL: "Cancelar",
         CONFIRM: "Confirmar",
+        AddAComment: "Agregar un comentario",
     },
 }
