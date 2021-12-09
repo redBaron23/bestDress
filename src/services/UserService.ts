@@ -45,6 +45,10 @@ class UserService {
         }
     }
 
+    public isUserExist = async (username: string): Promise<boolean> => {
+        return this.getUser(username)
+            .then(user => !!user)
+    }
 }
 
 export default new UserService();

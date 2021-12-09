@@ -5,6 +5,7 @@ import User from "../model/User";
 import { AuthenticatorInterface } from "../types/AuthenticatorInterface";
 import Log from "../utils/Log";
 import LogTags from "../utils/LogTags";
+import UserService from "./UserService";
 
 const TAG = LogTags.AUTHENTICATOR_SERVICE;
 
@@ -18,16 +19,19 @@ class AuthenticatorService implements AuthenticatorInterface {
   }
 
   public initialize = async (): Promise<void> => {
-    Auth.currentUserInfo().then((userInfo) => {
+    try {
+      const userInfo = await Auth.currentUserInfo()
       this.username = userInfo.username;
       this.userId = userInfo.id;
 
       Log.info(TAG, `User info: ${JSON.stringify(userInfo)}`);
-      // this.updateUserRecord();
-    });
-
-    // const caca = await API.graphql(graphqlOperation(listUsers));
-    // Log.info(TAG, JSON.stringify(caca))
+      if (!await UserService.isUserExist(this.username)) {
+        this.createUserRecord();
+      }
+    }
+    catch(e) {
+      Log.error(TAG, "Error in initialize: ", e);
+    }
   };
 
   private getIdFromAuth(): Promise<string> {
@@ -55,13 +59,12 @@ class AuthenticatorService implements AuthenticatorInterface {
       });
   }
 
-  private updateUserRecord(): void {
-    this.getUserId()
-      .then(userId => new User(userId, this.username))
-    //   .then()
-    // const currentUser = ;
+  private async createUserRecord(): Promise<void> {
+    const userId = await this.getUserId();
+
+    const currentUser = new User(userId, this.username);
     try {
-      // console.log(`[TEST] currentUser ${JSON.stringify(currentUser)}`);
+      console.log(TAG, "Create new user", this.username);
       API.graphql(graphqlOperation(createUser, { input: currentUser }))
     } catch (error) {
       Log.error(TAG, "Error in update user record: ", error);

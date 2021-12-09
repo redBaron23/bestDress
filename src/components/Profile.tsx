@@ -69,6 +69,8 @@ export default function Profile(props: Props) {
     });
   };
 
+  console.log(user)
+
   return (
     <ScrollView
       style={styles.scrollView}

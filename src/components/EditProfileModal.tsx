@@ -54,7 +54,7 @@ const EditProfileModal = (props: Props) => {
         />
         <TextInput
           mode="outlined"
-          value={age.toString()}
+          value={!!age ? age.toString() : ''}
           onChangeText={(text) => setAge(parseInt(text))}
           onPressIn={undefined}
           onPressOut={undefined}
