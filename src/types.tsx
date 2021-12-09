@@ -23,6 +23,7 @@ export type TabHomeParamList = {
 
 export type TabProfileParamList = {
   [Dictionary.PROFILE]: undefined;
+  [Dictionary.OTHER_PROFILE]: undefined;
 };
 
 export type TabSearchParamList = {
