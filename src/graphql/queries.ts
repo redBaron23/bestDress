@@ -151,6 +151,10 @@ export const getPost = /* GraphQL */ `
           updatedAt
           likes
           dislikes
+          username
+          profilePicture
+          userLiked
+          userDisliked
           createdAt
           owner
         }
@@ -213,6 +217,10 @@ export const getComment = /* GraphQL */ `
       updatedAt
       likes
       dislikes
+      username
+      profilePicture
+      userLiked
+      userDisliked
       createdAt
       post {
         id
@@ -266,6 +274,10 @@ export const listComments = /* GraphQL */ `
         updatedAt
         likes
         dislikes
+        username
+        profilePicture
+        userLiked
+        userDisliked
         createdAt
         post {
           id

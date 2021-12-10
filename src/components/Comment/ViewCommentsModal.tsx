@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { View, StyleSheet, Text } from "react-native";
+import { ScrollView } from "react-native-gesture-handler";
 import { Button, Modal, Portal, TextInput } from "react-native-paper";
 import Comment from "../../model/Comment";
 import Translator from "../../services/Translator";
@@ -10,6 +11,8 @@ interface Props {
   open: boolean;
   onClose: () => void;
   comments: Comment[];
+  onDeleteComment: (commentId: string) => void;
+  onEditComment: (comment: Comment) => void;
 }
 
 const ViewCommentsModal = (props: Props) => {
@@ -20,12 +23,11 @@ const ViewCommentsModal = (props: Props) => {
         onDismiss={props.onClose}
         contentContainerStyle={styles.containerStyle}
       >
-        <View>
+        <ScrollView>
           {props.comments.map((comment, index) => (
-            // <Text key={index}>{comment.content}</Text>
-            <CommentView key={index} comment={comment} />
+            <CommentView key={index} comment={comment} onDelete={props.onDeleteComment} onEditComment={props.onEditComment}/>
           ))}
-        </View>
+        </ScrollView>
         <View style={styles.buttonsModal}>
           <Button mode="text" onPress={props.onClose}>
             {Translator.translate(Dictionary.CLOSE)}

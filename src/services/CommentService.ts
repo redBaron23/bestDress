@@ -15,11 +15,11 @@ class CommentService {
         comment.username = await AuthenticatorService.getUsername();
         comment.profilePicture = await UserService.getProfilePicture(comment.username);
         try {
-            Log.info(TAG, `createComment ${JSON.stringify(comment)}`);
-
-            return await API.graphql(
+            const response = await API.graphql(
                 graphqlOperation(createComment, { input: comment })
-            ).data.createComment;
+            );
+
+            return response.data.createComment;
 
         } catch (err) {
             Log.error(TAG, 'createComment', err);
@@ -29,8 +29,9 @@ class CommentService {
 
     public async deleteComment(commentId: string): Promise<any> {
         try {
+            Log.info(TAG, `Deleting comment: ${commentId}`);
             return await API.graphql(
-                graphqlOperation(deleteComment, { input: commentId })
+                graphqlOperation(deleteComment, { input: {id: commentId} })
             );
 
         } catch (err) {
@@ -41,9 +42,12 @@ class CommentService {
 
     public async updateComment(comment: Comment): Promise<any> {
         try {
-            return await API.graphql(
-                graphqlOperation(updateComment, { input: comment })
-            );
+            return (await API.graphql(
+                graphqlOperation(updateComment, { input: {
+                    id: comment.id,
+                    content: comment.content,
+                }})
+            )).data.updateComment;
         }
 
         catch (err) {

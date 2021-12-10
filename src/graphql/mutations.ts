@@ -171,6 +171,10 @@ export const createPost = /* GraphQL */ `
           updatedAt
           likes
           dislikes
+          username
+          profilePicture
+          userLiked
+          userDisliked
           createdAt
           owner
         }
@@ -225,6 +229,10 @@ export const updatePost = /* GraphQL */ `
           updatedAt
           likes
           dislikes
+          username
+          profilePicture
+          userLiked
+          userDisliked
           createdAt
           owner
         }
@@ -279,6 +287,10 @@ export const deletePost = /* GraphQL */ `
           updatedAt
           likes
           dislikes
+          username
+          profilePicture
+          userLiked
+          userDisliked
           createdAt
           owner
         }
@@ -299,6 +311,10 @@ export const createComment = /* GraphQL */ `
       updatedAt
       likes
       dislikes
+      username
+      profilePicture
+      userLiked
+      userDisliked
       createdAt
       post {
         id
@@ -350,6 +366,10 @@ export const updateComment = /* GraphQL */ `
       updatedAt
       likes
       dislikes
+      username
+      profilePicture
+      userLiked
+      userDisliked
       createdAt
       post {
         id
@@ -401,6 +421,10 @@ export const deleteComment = /* GraphQL */ `
       updatedAt
       likes
       dislikes
+      username
+      profilePicture
+      userLiked
+      userDisliked
       createdAt
       post {
         id

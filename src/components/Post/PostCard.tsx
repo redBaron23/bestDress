@@ -82,7 +82,7 @@ export default function PostCard(props: Props) {
       post.userLiked.includes(myUsername) && setIsLiked(true);
       post.userDisliked.includes(myUsername) && setIsDisliked(true);
       setMyUsername(myUsername);
-      UserService.getProfilePicture(myUsername).then(setProfilePicture);
+      UserService.getProfilePicture(props.post.username).then(setProfilePicture);
     });
 
     CommentService.getComments(post.id!).then(setComments);
@@ -158,11 +158,25 @@ export default function PostCard(props: Props) {
     !!comments.length && setSeeCommentsMode((prevState) => !prevState);
 
   const LeftContent = (secondaryProps: any) =>
-    false && !!profilePicture ? (
+    !!profilePicture ? (
       <Avatar.Image {...secondaryProps} source={{ uri: profilePicture }} />
     ) : (
       <Avatar.Icon {...secondaryProps} icon="account" />
     );
+
+  const handleDeleteComment = (commentId: string) => {
+    CommentService.deleteComment(commentId).then(() =>
+      setComments((prev) => prev.filter((comment) => comment.id !== commentId))
+    );
+  };
+
+  const handleEditComment = (comment: Comment) => {
+    CommentService.updateComment(comment).then((resComment) =>
+      setComments((prev) =>
+        prev.map((c) => (c.id === resComment.id ? resComment : c))
+      )
+    );
+  }
 
   return (
     <Card
@@ -176,8 +190,10 @@ export default function PostCard(props: Props) {
     >
       <ViewCommentsModal
         open={seeCommentsMode}
-        onClose={toggleSeeCommentsMode}
+        onClose={() => setSeeCommentsMode(false)}
         comments={comments}
+        onDeleteComment={handleDeleteComment}
+        onEditComment={handleEditComment}
       />
       <TouchableOpacity
         onPress={() => {
