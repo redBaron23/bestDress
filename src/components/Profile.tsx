@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import {
   ScrollView,
   View,
@@ -78,16 +78,27 @@ export default function Profile(props: Props) {
         <RefreshControl refreshing={refreshing} onRefresh={updatePosts} />
       }
     >
-      <TouchableOpacity onPress={toggleEditProfilePictureModal}>
+      {props.isSelfProfile ? (
+        <TouchableOpacity onPress={toggleEditProfilePictureModal}>
+          <ImageBackground
+            source={
+              user?.profilePicture
+                ? { uri: user.profilePicture }
+                : require("../assets/images/goku.jpg")
+            }
+            style={styles.photo}
+          />
+        </TouchableOpacity>
+      ) : (
         <ImageBackground
           source={
             user?.profilePicture
-              ? {uri: user.profilePicture}
+              ? { uri: user.profilePicture }
               : require("../assets/images/goku.jpg")
           }
           style={styles.photo}
         />
-      </TouchableOpacity>
+      )}
       {!!user && (
         <>
           <EditProfileModal

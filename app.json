@@ -25,10 +25,9 @@
       "adaptiveIcon": {
         "foregroundImage": "./src/assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "io.expo.client"
     },
-    "web": {
-      
-    }
+    "web": {}
   }
 }

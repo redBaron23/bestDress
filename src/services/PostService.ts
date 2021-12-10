@@ -58,7 +58,7 @@ class PostService {
       const postData = await API.graphql(graphqlOperation(listPosts));
       const items = postData.data.listPosts.items;
 
-      Log.info(TAG, `total post fetched: ${items.length}`);
+      Log.info(TAG, `total post fetched: ${items}`);
       return items;
     } catch (error) {
       Log.error(TAG, "Error fetching all posts", error);
