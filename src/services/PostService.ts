@@ -7,6 +7,7 @@ import Log from "../utils/Log";
 import LogTags from "../utils/LogTags";
 import Storage from "@aws-amplify/storage";
 import AuthenticatorService from "./AuthenticatorService";
+import ArrayUtils from "../utils/ArrayUtils";
 
 const TAG = LogTags.POST_SERVICE;
 
@@ -58,8 +59,7 @@ class PostService {
       const postData = await API.graphql(graphqlOperation(listPosts));
       const items = postData.data.listPosts.items;
 
-      Log.info(TAG, `total post fetched: ${items}`);
-      return items;
+      return ArrayUtils.sortByCreatedAt(items);
     } catch (error) {
       Log.error(TAG, "Error fetching all posts", error);
       return [];
