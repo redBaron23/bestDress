@@ -82,7 +82,7 @@ export default function PostCard(props: Props) {
       post.userLiked.includes(myUsername) && setIsLiked(true);
       post.userDisliked.includes(myUsername) && setIsDisliked(true);
       setMyUsername(myUsername);
-      // UserService.getProfilePicture(myUsername).then(setProfilePicture);
+      UserService.getProfilePicture(myUsername).then(setProfilePicture);
     });
 
     CommentService.getComments(post.id!).then(setComments);

@@ -5,12 +5,18 @@ import { listComments } from "../graphql/queries";
 import Comment from '../model/Comment';
 import Log from '../utils/Log';
 import LogTags from '../utils/LogTags';
+import AuthenticatorService from './AuthenticatorService';
+import UserService from './UserService';
 
 const TAG = LogTags.COMMENET_SERVICE;
 
 class CommentService {
     public async createComment(comment: Comment): Promise<any> {
+        comment.username = await AuthenticatorService.getUsername();
+        comment.profilePicture = await UserService.getProfilePicture(comment.username);
         try {
+            Log.info(TAG, `createComment ${JSON.stringify(comment)}`);
+
             return await API.graphql(
                 graphqlOperation(createComment, { input: comment })
             ).data.createComment;

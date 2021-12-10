@@ -74,4 +74,8 @@ type Comment
   updatedAt: AWSDateTime!
   likes: Int!
   dislikes: Int!
+  username: String!
+  profilePicture: String!
+  userLiked: AWSJSON
+  userDisliked: AWSJSON
 }

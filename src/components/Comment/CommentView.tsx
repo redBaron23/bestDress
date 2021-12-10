@@ -15,7 +15,7 @@ interface Props {
 }
 
 const CommentView = (props: Props) => {
-  const [currentUsername, setCurrentUsername] = useState<string>("");
+//   const [currentUsername, setCurrentUsername] = useState<string>("");
 
   //@TODO ADD USERNAME AND AVATAR TO COMMENT
 //   useEffect(() => {
@@ -30,8 +30,8 @@ const CommentView = (props: Props) => {
   return (
     <View>
         {/* <Paragraph> {currentUsername}</Paragraph> */}
-      <Text>{currentUsername}</Text>
-      {/* <Paragraph>{props.comment.content}</Paragraph>; */}
+      {/* <Text>{currentUsername}</Text> */}
+      <Paragraph>{props.comment.content}</Paragraph>;
     </View>
   );
 };
